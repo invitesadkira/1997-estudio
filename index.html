@@ -1,0 +1,2216 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Invites · Gestão Financeira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<style>
+:root {
+  --ink: #14201b;
+  --ink-soft: #1f2e26;
+  --paper: #f1f4ef;
+  --surface: #ffffff;
+  --primary: #1f5c45;
+  --primary-dark: #143f2e;
+  --gold: #b8902e;
+  --gold-soft: #f3e6c4;
+  --danger: #a8432f;
+  --danger-soft: #f3ddd5;
+  --success: #2e7d5b;
+  --success-soft: #dcefe4;
+  --warning: #b8902e;
+  --warning-soft: #f7ecd2;
+  --muted: #5b6760;
+  --border: #dce3dc;
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --radius: 10px;
+  --shadow-sm: 0 1px 2px rgba(20, 32, 27, 0.06);
+  --shadow-md: 0 8px 24px rgba(20, 32, 27, 0.08);
+}
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; margin: 0; color: var(--ink); }
+a { color: inherit; }
+button { font-family: var(--font-body); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.mono { font-family: var(--font-mono); }
+
+.app-shell { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 240px; flex-shrink: 0; background: var(--ink); color: #e9efe9;
+  display: flex; flex-direction: column; padding: 22px 16px;
+}
+.sidebar-brand {
+  display: flex; flex-direction: column; gap: 2px; padding: 0 8px 22px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 18px;
+}
+.sidebar-brand .name { font-family: var(--font-display); font-size: 20px; letter-spacing: 0.2px; }
+.sidebar-brand .tag { font-size: 11.5px; color: #9db3a6; text-transform: uppercase; letter-spacing: 1.2px; }
+.nav-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px;
+  color: #cdd9d0; text-decoration: none; font-size: 14px; font-weight: 500; position: relative;
+  border-left: 3px solid transparent; transition: background 0.15s ease, color 0.15s ease;
+  background: none; border-top: none; border-right: none; border-bottom: none; width: 100%; text-align: left; cursor: pointer;
+}
+.nav-item:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+.nav-item.active { background: rgba(184, 144, 46, 0.16); color: #fff; border-left-color: var(--gold); }
+.sidebar-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.sidebar-user { display: flex; flex-direction: column; gap: 1px; padding: 8px; font-size: 13px; }
+.sidebar-user .u-name { color: #fff; font-weight: 600; }
+.sidebar-user .u-role { color: #9db3a6; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.6px; }
+.logout-btn {
+  width: 100%; margin-top: 8px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e9efe9; padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: 13px;
+}
+.logout-btn:hover { background: rgba(255, 255, 255, 0.08); }
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; padding: 18px 28px;
+  border-bottom: 1px solid var(--border); background: var(--surface);
+}
+.topbar h1 { font-size: 22px; }
+.topbar .subtitle { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.content { padding: 28px; flex: 1; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 600;
+  padding: 9px 16px; border-radius: 8px; border: 1px solid transparent; cursor: pointer;
+  transition: filter 0.12s ease, background 0.12s ease;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-primary:disabled { opacity: 0.6; cursor: default; }
+.btn-ghost { background: transparent; border-color: var(--border); color: var(--ink); }
+.btn-ghost:hover { background: #e7ebe4; }
+.btn-danger { background: transparent; border-color: var(--danger); color: var(--danger); }
+.btn-danger:hover { background: var(--danger-soft); }
+.btn-sm { padding: 6px 10px; font-size: 12.5px; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 18px 16px; position: relative; box-shadow: var(--shadow-sm); }
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 18px; right: 18px; height: 1px;
+  background-image: linear-gradient(to right, var(--border) 60%, transparent 0%);
+  background-size: 8px 1px; background-repeat: repeat-x;
+}
+.stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 8px; }
+.stat-value { font-family: var(--font-mono); font-size: 25px; font-weight: 600; letter-spacing: -0.3px; }
+.stat-value.positive { color: var(--success); }
+.stat-value.negative { color: var(--danger); }
+.stat-value.neutral { color: var(--ink); }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow-sm); }
+.panel-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+
+.table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+thead tr { background: #f6f8f4; border-bottom: 1px solid var(--border); }
+th { text-align: left; padding: 11px 14px; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #f8faf6; }
+.cell-valor { font-family: var(--font-mono); font-weight: 600; white-space: nowrap; }
+.row-actions { display: flex; gap: 6px; }
+.empty-state { padding: 48px 20px; text-align: center; color: var(--muted); }
+.empty-state .big { font-family: var(--font-display); font-size: 18px; color: var(--ink); margin-bottom: 6px; }
+
+.badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 100px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+.badge-success { background: var(--success-soft); color: var(--success); }
+.badge-warning { background: var(--warning-soft); color: var(--warning); }
+.badge-danger { background: var(--danger-soft); color: var(--danger); }
+.badge-neutral { background: #e9ece6; color: var(--muted); }
+
+.form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+.field input, .field select, .field textarea {
+  border: 1px solid var(--border); border-radius: 8px; padding: 9px 11px; font-size: 13.5px;
+  font-family: var(--font-body); background: var(--surface); color: var(--ink);
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); }
+.field input:disabled { background: #f1f1ee; color: var(--muted); }
+.checkbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.checkbox-row { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; }
+.form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+.form-error { background: var(--danger-soft); color: var(--danger); padding: 9px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; }
+.form-info { background: var(--gold-soft); color: #6b4f12; padding: 9px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; line-height: 1.5; }
+
+.modal-overlay { position: fixed; inset: 0; background: rgba(20, 32, 27, 0.45); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 50; }
+.modal { background: var(--surface); border-radius: 14px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; padding: 26px; box-shadow: var(--shadow-md); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.modal-close { background: none; border: none; font-size: 20px; color: var(--muted); cursor: pointer; }
+
+.page-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+.page-toolbar .title-block .eyebrow { font-size: 12px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 4px; }
+.page-toolbar h2 { font-size: 20px; }
+
+.login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--ink); padding: 24px; }
+.login-card { width: 100%; max-width: 380px; background: var(--surface); border-radius: 14px; padding: 36px 32px; box-shadow: var(--shadow-md); }
+.login-brand { text-align: center; margin-bottom: 28px; }
+.login-brand .name { font-family: var(--font-display); font-size: 28px; }
+.login-brand .tag { color: var(--muted); font-size: 12.5px; text-transform: uppercase; letter-spacing: 1.2px; margin-top: 4px; }
+.login-card .btn-primary { width: 100%; justify-content: center; margin-top: 6px; padding: 10px; }
+.login-hint { margin-top: 18px; font-size: 12px; color: var(--muted); text-align: center; line-height: 1.5; }
+
+.chart-panel { height: 280px; display: flex; align-items: flex-end; gap: 18px; padding-top: 10px; }
+.chart-bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
+.chart-bars { display: flex; gap: 4px; align-items: flex-end; height: 100%; width: 100%; justify-content: center; }
+.chart-bar { width: 18px; border-radius: 4px 4px 0 0; min-height: 2px; transition: height 0.25s ease; }
+.chart-bar.entradas { background: var(--success); }
+.chart-bar.saidas { background: var(--danger); }
+.chart-label { font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+.chart-legend { display: flex; gap: 18px; justify-content: center; margin-top: 14px; font-size: 12.5px; color: var(--ink-soft); }
+.chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chart-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+.app-loading { min-height: 100vh; display: flex; align-items: center; justify-content: center; color: var(--muted); background: var(--ink); }
+
+@media (max-width: 720px) {
+  .app-shell { flex-direction: column; }
+  .sidebar { width: 100%; }
+  .form-grid, .checkbox-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- React, ReactDOM, Babel (transforma o JSX direto no navegador) e Supabase -->
+<!-- Versões fixas de propósito: assim uma atualização dessas bibliotecas no futuro não quebra este arquivo. -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.52.1/dist/umd/supabase.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script type="text/plain" id="app-source">
+
+const { useState, useEffect, useCallback, useMemo, createContext, useContext } = React;
+const { createClient } = supabase;
+
+// ============================================================
+// CONEXÃO COM O SUPABASE
+// (anon key é pública por natureza — protegida pelas regras de
+// RLS configuradas no banco. Nunca coloque aqui a service_role key.)
+// ============================================================
+const SUPABASE_URL = 'https://ztkyxlffygobrxlnzkum.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0a3l4bGZmeWdvYnJ4bG56a3VtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMDY1MzksImV4cCI6MjA5Nzg4MjUzOX0.IThiNfRnaTaZnpfA-XuhWRkGmxsm3UPtvuC57QTRA3Y';
+// O Supabase usa, por padrão, um "cadeado" do navegador (Web Lock) pra
+// coordenar o login entre abas. Esse recurso pode travar (sem nunca
+// soltar) em alguns navegadores/situações, especialmente depois de um
+// refresh — foi o que te deu aquele "Carregando..." sem fim.
+// A solução certa não é desligar o cadeado por completo (sem nenhuma
+// fila, várias partes da tela competem pela "credencial" de login ao
+// mesmo tempo e os dados somem até dar um refresh) — é usar uma fila
+// só LOCAL, dentro da própria aba, sem depender do Web Lock do
+// navegador (que é o que trava entre abas).
+let filaDoCadeado = Promise.resolve();
+const cadeadoLocal = (_nome, _tempoLimite, fn) => {
+  const vezAnterior = filaDoCadeado.catch(() => {}); // erro de uma vez anterior não trava a fila
+  const minhaVez = vezAnterior.then(fn);
+  filaDoCadeado = minhaVez.catch(() => {});
+  return minhaVez;
+};
+
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { lock: cadeadoLocal },
+});
+
+// ============================================================
+// FORMATAÇÃO
+// ============================================================
+function formatMoney(value) {
+  const n = Number(value || 0);
+  return n.toLocaleString('pt-AO', { style: 'currency', currency: 'AOA' });
+}
+function formatDate(isoDate) {
+  if (!isoDate) return '—';
+  const [y, m, d] = isoDate.split('-');
+  if (!y) return isoDate;
+  return `${d}/${m}/${y}`;
+}
+function monthLabel(yyyyMm) {
+  if (!yyyyMm) return '—';
+  const [y, m] = yyyyMm.split('-');
+  const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+  return `${meses[Number(m) - 1] || m}/${y}`;
+}
+
+function nomeArquivo(texto) {
+  return texto
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+// ============================================================
+// RECIBO DE SALÁRIO EM PDF
+// ============================================================
+function gerarReciboSalario(salario) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const base = Number(salario.salario_base || 0);
+  const bonus = Number(salario.bonus || 0);
+  const descontos = Number(salario.descontos || 0);
+  const liquido = base + bonus - descontos;
+
+  // Cabeçalho
+  doc.setFillColor(31, 92, 69);
+  doc.rect(0, 0, 210, 32, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(22);
+  doc.text('Invites', 15, 17);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.text('Gestão Financeira', 15, 24);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(13);
+  doc.text('RECIBO DE PAGAMENTO DE SALÁRIO', 195, 18, { align: 'right' });
+
+  // Dados do funcionário
+  doc.setTextColor(20, 32, 27);
+  let y = 46;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
+  doc.text('Funcionário:', 15, y);
+  doc.setFont('helvetica', 'normal');
+  doc.text(String(salario.funcionario || '—'), 52, y);
+
+  doc.setFont('helvetica', 'bold');
+  doc.text('Mês de referência:', 120, y);
+  doc.setFont('helvetica', 'normal');
+  doc.text(monthLabel(salario.mes_referencia), 165, y);
+
+  y += 8;
+  doc.setFont('helvetica', 'bold');
+  doc.text('Cargo:', 15, y);
+  doc.setFont('helvetica', 'normal');
+  doc.text(String(salario.cargo || '—'), 52, y);
+
+  doc.setFont('helvetica', 'bold');
+  doc.text('Data de pagamento:', 120, y);
+  doc.setFont('helvetica', 'normal');
+  doc.text(formatDate(salario.data_pagamento) === '—' ? formatDate(new Date().toISOString().slice(0, 10)) : formatDate(salario.data_pagamento), 165, y);
+
+  y += 10;
+  doc.setDrawColor(184, 144, 46);
+  doc.setLineWidth(0.6);
+  doc.line(15, y, 195, y);
+
+  // Tabela de valores
+  y += 10;
+  doc.setFillColor(241, 244, 239);
+  doc.rect(15, y - 6, 180, 9, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.text('Descrição', 18, y);
+  doc.text('Valor', 192, y, { align: 'right' });
+
+  const linhas = [
+    ['Salário base', formatMoney(base)],
+    ['Bônus', formatMoney(bonus)],
+    ['Descontos', `- ${formatMoney(descontos)}`],
+  ];
+  doc.setFont('helvetica', 'normal');
+  linhas.forEach(([label, valor]) => {
+    y += 10;
+    doc.text(label, 18, y);
+    doc.text(valor, 192, y, { align: 'right' });
+    doc.setDrawColor(220, 227, 220);
+    doc.setLineWidth(0.2);
+    doc.line(15, y + 3, 195, y + 3);
+  });
+
+  y += 12;
+  doc.setFillColor(31, 92, 69);
+  doc.rect(15, y - 6, 180, 10, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
+  doc.text('VALOR LÍQUIDO', 18, y);
+  doc.text(formatMoney(liquido), 192, y, { align: 'right' });
+
+  // Declaração + assinaturas
+  doc.setTextColor(20, 32, 27);
+  y += 26;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.text(
+    'Eu, abaixo assinado(a), confirmo o recebimento do valor líquido acima referente ao mês indicado.',
+    15, y, { maxWidth: 180 }
+  );
+
+  y += 28;
+  doc.setDrawColor(20, 32, 27);
+  doc.setLineWidth(0.3);
+  doc.line(20, y, 95, y);
+  doc.line(115, y, 190, y);
+  doc.setFontSize(9);
+  doc.text('Assinatura do(a) Funcionário(a)', 20, y + 6);
+  doc.text('Assinatura — Invites', 115, y + 6);
+
+  // Rodapé
+  doc.setFontSize(8);
+  doc.setTextColor(150, 150, 150);
+  doc.text(
+    `Documento gerado pelo sistema de gestão financeira da Invites em ${new Date().toLocaleString('pt-AO')}.`,
+    15, 285
+  );
+
+  const arquivo = `recibo-${nomeArquivo(salario.funcionario || 'funcionario')}-${salario.mes_referencia || ''}.pdf`;
+  doc.save(arquivo);
+}
+
+// ============================================================
+// PÁGINAS / MÓDULOS DO SISTEMA
+// ============================================================
+const PAGES = [
+  { key: 'dashboard', label: 'Dashboard', adminOnly: false },
+  { key: 'encomendas', label: 'Encomendas', adminOnly: false },
+  { key: 'entradas', label: 'Entradas', adminOnly: false },
+  { key: 'saidas', label: 'Saídas', adminOnly: false },
+  { key: 'despesas', label: 'Despesas', adminOnly: false },
+  { key: 'salarios', label: 'Salários', adminOnly: false },
+  { key: 'servicos', label: 'Serviços', adminOnly: false },
+  { key: 'relatorios', label: 'Relatórios', adminOnly: false, requiresTotais: true },
+  { key: 'saldo_inicial', label: 'Saldo Inicial', adminOnly: true },
+  { key: 'usuarios', label: 'Usuários', adminOnly: true },
+];
+const ASSIGNABLE_PAGES = PAGES.filter((p) => !p.adminOnly && !p.requiresTotais);
+
+// ============================================================
+// CAMADA DE DADOS (fala com o Supabase)
+// ============================================================
+function makeResource(table) {
+  return {
+    async list() {
+      const { data, error } = await sb.from(table).select('*').order('criado_em', { ascending: false });
+      if (error) { console.error(`Erro ao listar "${table}":`, error.message); return []; }
+      return data ?? [];
+    },
+    async add(item) {
+      const { data, error } = await sb.from(table).insert(item).select().single();
+      if (error) { console.error(`Erro ao criar em "${table}":`, error.message); throw error; }
+      return data;
+    },
+    async update(id, patch) {
+      const { data, error } = await sb.from(table).update(patch).eq('id', id).select().single();
+      if (error) { console.error(`Erro ao atualizar em "${table}":`, error.message); throw error; }
+      return data;
+    },
+    async remove(id) {
+      const { error } = await sb.from(table).delete().eq('id', id);
+      if (error) { console.error(`Erro ao excluir em "${table}":`, error.message); throw error; }
+    },
+  };
+}
+
+const db = {
+  entradas: makeResource('entradas'),
+  saidas: makeResource('saidas'),
+  despesas: makeResource('despesas'),
+  salarios: makeResource('salarios'),
+  servicos: makeResource('servicos'),
+  encomendas: makeResource('encomendas'),
+  saldo_inicial: makeResource('saldo_inicial'),
+  profiles: makeResource('profiles'),
+};
+
+async function adminUsersAction(payload) {
+  const { data, error } = await sb.functions.invoke('admin-users', { body: payload });
+  if (error) throw error;
+  if (data?.error) throw new Error(data.error);
+  return data;
+}
+
+// ============================================================
+// CATÁLOGO INICIAL DE SERVIÇOS (seed)
+// ============================================================
+const SERVICOS_INICIAIS = [
+  { categoria: 'Web-Convites', nome: 'Pacote Básico', faixa: '20 a 85 convites', preco: 117626, ativo: 'Sim',
+    observacoes: 'Save the date, fotos, convite, música, itinerário, painel de leitura dos QR Codes, manual do bom convidado, IBAN.' },
+  { categoria: 'Web-Convites', nome: 'Pacote Popular', faixa: '86 a 136 convites', preco: 169999, ativo: 'Sim',
+    observacoes: 'Mesmo conteúdo do pacote básico, faixa de convites maior.' },
+  { categoria: 'Web-Convites', nome: 'Premium Luxo', faixa: '137 a 200 convites', preco: 249999, ativo: 'Sim',
+    observacoes: 'Mesmo conteúdo do pacote básico, faixa de convites maior.' },
+  { categoria: 'Premium (com nomes e QR Code)', nome: 'Pacote 110 pessoas', faixa: 'Ideal 60–66 convites', preco: 99999, ativo: 'Sim',
+    observacoes: 'Save the date, confirmação pelo site, monograma, fotos dos noivos, nome do convidado + QR Code, cronograma, manual do convidado, declaração, sugestões de presentes, caricatura, painel de leitura online.' },
+  { categoria: 'Premium (com nomes e QR Code)', nome: 'Pacote 230 pessoas', faixa: 'Ideal 126–136 convites', preco: 159999, ativo: 'Sim',
+    observacoes: 'Mesmo conteúdo do pacote de 110 pessoas, faixa maior.' },
+  { categoria: 'Premium (com nomes e QR Code)', nome: 'Pacote 300 pessoas', faixa: 'Ideal 166–176 convites', preco: 219999, ativo: 'Sim',
+    observacoes: 'Mesmo conteúdo do pacote de 110 pessoas, faixa maior.' },
+  { categoria: 'Essenciais (com nomes)', nome: 'Pacote 110 convidados', faixa: 'Ideal 60–66 convites', preco: 54999, ativo: 'Sim',
+    observacoes: 'Save the date, confirmação via WhatsApp ou site (site +25.000 kz), fotos dos noivos, convite com links dos locais, cronograma, manual do convidado, sugestões de presentes, caricatura dos noivos.' },
+  { categoria: 'Essenciais (com nomes)', nome: 'Pacote 230 convidados', faixa: 'Ideal 126–136 convites', preco: 74999, ativo: 'Sim',
+    observacoes: 'Mesmo conteúdo do pacote de 110 convidados, faixa maior.' },
+  { categoria: 'Essenciais (com nomes)', nome: 'Pacote 300 convidados', faixa: 'Ideal 166–176 convites', preco: 99999, ativo: 'Sim',
+    observacoes: 'Mesmo conteúdo do pacote de 110 convidados, faixa maior.' },
+  { categoria: 'Básico (sem nomes)', nome: 'Pacote Básico', faixa: '1 convite único, para quantas pessoas desejar', preco: 29999, ativo: 'Sim',
+    observacoes: 'Save the date, fotos dos noivos, convite com links dos locais, cronograma do dia, manual do bom convidado. Não leva nomes dos convidados.' },
+  { categoria: 'Aniversário Infantil', nome: 'PDF', faixa: null, preco: 15000, ativo: 'Sim',
+    observacoes: 'Convite de aniversário infantil em PDF.' },
+  { categoria: 'Aniversário Infantil', nome: 'Convite animado', faixa: null, preco: 20000, ativo: 'Sim',
+    observacoes: 'Convite de aniversário infantil animado.' },
+  { categoria: 'Aniversário Infantil', nome: 'PDF + Vídeo', faixa: null, preco: 30000, ativo: 'Sim',
+    observacoes: 'Convite de aniversário infantil em PDF acompanhado de vídeo.' },
+  { categoria: 'Aniversário Infantil', nome: 'Site com vídeo', faixa: null, preco: 45000, ativo: 'Sim',
+    observacoes: 'Convite de aniversário infantil em formato de site, com vídeo.' },
+  { categoria: 'Animação Premium 3D', nome: 'CineMagia', faixa: null, preco: 35000, ativo: 'Sim',
+    prazo_normal_dias: 8, taxa_urgencia: 10000, prazo_urgencia_horas: 24,
+    observacoes: 'Convite animado estilo desenhos animados (3D, no estilo dos grandes estúdios de animação). Prazo de produção: 6 a 10 dias. Entrega urgente (24h): +10.000 kz. Inclui até 2 alterações gratuitas; cada alteração extra: +15.000 kz.' },
+  { categoria: 'Convites Físicos', nome: 'Convite Físico (impresso)', faixa: 'Preço por unidade', preco: 1500, ativo: 'Sim',
+    preco_por_unidade: 'Sim', prazo_normal_dias: 5,
+    observacoes: 'Convite impresso, preço por unidade. Prazo de 5 dias úteis (sábados, domingos e feriados não contam, a menos que seja urgente).' },
+].map((s) => ({ prazo_normal_dias: 3, taxa_urgencia: 8000, prazo_urgencia_horas: 24, preco_por_unidade: 'Não', ...s }));
+
+async function ensureServicosSeed() {
+  const servicos = await db.servicos.list();
+  if (servicos.length === 0) {
+    for (const servico of SERVICOS_INICIAIS) {
+      await db.servicos.add(servico);
+    }
+    console.info('%cCatálogo inicial de serviços criado.', 'color: #C9A227; font-weight: bold;');
+  }
+}
+
+// ============================================================
+// HOOK GENÉRICO DE CRUD
+// ============================================================
+function useCollection(resourceName) {
+  const resource = db[resourceName];
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
+
+  const reload = useCallback(async () => {
+    setLoading(true);
+    setLoadError('');
+    try {
+      const data = await withTimeout(resource.list(), 12000, `carregar ${resourceName}`);
+      setItems(data);
+    } catch (err) {
+      console.error(`Erro ao carregar "${resourceName}":`, err);
+      setLoadError(err.message || 'Não foi possível carregar os dados.');
+      setItems([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [resource, resourceName]);
+
+  useEffect(() => { reload(); }, [reload]);
+
+  const add = useCallback(async (item) => { await resource.add(item); await reload(); }, [resource, reload]);
+  const update = useCallback(async (id, patch) => { await resource.update(id, patch); await reload(); }, [resource, reload]);
+  const remove = useCallback(async (id) => { await resource.remove(id); await reload(); }, [resource, reload]);
+
+  return { items, loading, loadError, add, update, remove, reload };
+}
+
+// ============================================================
+// AUTENTICAÇÃO (Supabase Auth)
+// ============================================================
+const AuthContext = createContext(null);
+
+async function loadProfile(userId) {
+  const { data, error } = await sb.from('profiles').select('*').eq('id', userId).single();
+  if (error) { console.error('Erro ao carregar perfil:', error.message); return null; }
+  return data;
+}
+
+function withTimeout(promise, ms, label) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error(
+      `Demorou demais pra responder (${label}). Isso costuma acontecer quando há outras abas do mesmo programa abertas ao mesmo tempo — tente fechar as outras abas e recarregar, ou reiniciar o navegador.`
+    )), ms)),
+  ]);
+}
+
+function AuthProvider({ children }) {
+  const [session, setSession] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [initError, setInitError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+
+    (async () => {
+      try {
+        const { data, error } = await withTimeout(sb.auth.getSession(), 6000, 'verificar sessão');
+        if (error) {
+          // Sessão antiga/inválida guardada no navegador (comum depois de testes,
+          // ou quando o login foi excluído/recriado no Supabase). Limpa e segue
+          // pra tela de login, em vez de travar com erro.
+          if (String(error.message || '').toLowerCase().includes('refresh token')) {
+            await sb.auth.signOut();
+            if (active) setLoading(false);
+            return;
+          }
+          throw error;
+        }
+        if (!active) return;
+        setSession(data.session);
+        if (data.session?.user) {
+          const prof = await withTimeout(loadProfile(data.session.user.id), 6000, 'carregar perfil');
+          if (!active) return;
+          setProfile(prof);
+          if (prof) ensureServicosSeed();
+        }
+      } catch (err) {
+        console.error('Erro ao iniciar sessão:', err);
+        if (String(err.message || '').toLowerCase().includes('refresh token')) {
+          await sb.auth.signOut();
+          if (active) setLoading(false);
+          return;
+        }
+        if (active) setInitError(err.message || 'Erro ao conectar com o Supabase.');
+      } finally {
+        if (active) setLoading(false);
+      }
+    })();
+
+    const { data: listener } = sb.auth.onAuthStateChange(async (_event, newSession) => {
+      setSession(newSession);
+      if (newSession?.user) {
+        const prof = await loadProfile(newSession.user.id);
+        setProfile(prof);
+      } else {
+        setProfile(null);
+      }
+    });
+
+    return () => { active = false; listener.subscription.unsubscribe(); };
+  }, []);
+
+  const login = useCallback(async (email, senha) => {
+    try {
+      const { data, error } = await withTimeout(
+        sb.auth.signInWithPassword({ email: email.trim(), password: senha }),
+        8000,
+        'entrar'
+      );
+      if (error) return { ok: false, error: 'E-mail ou senha incorretos.' };
+
+      const prof = await withTimeout(loadProfile(data.user.id), 8000, 'carregar perfil');
+      if (!prof) {
+        await sb.auth.signOut();
+        return { ok: false, error: 'Este login existe, mas ainda não tem acesso liberado. Fale com o Admin God.' };
+      }
+      if (!prof.ativo) {
+        await sb.auth.signOut();
+        return { ok: false, error: 'Este usuário está desativado. Fale com o Admin God.' };
+      }
+      setProfile(prof);
+      ensureServicosSeed();
+      return { ok: true };
+    } catch (err) {
+      return { ok: false, error: err.message || 'Erro ao entrar.' };
+    }
+  }, []);
+
+  const logout = useCallback(async () => { await sb.auth.signOut(); setProfile(null); }, []);
+
+  const refreshUser = useCallback(async () => {
+    if (!session?.user) return;
+    const prof = await loadProfile(session.user.id);
+    setProfile(prof);
+  }, [session]);
+
+  const isAdminGod = profile?.role === 'admin_god';
+  const canSeeTotais = isAdminGod || !!profile?.ver_totais;
+
+  const hasAccess = useCallback((pageKey) => {
+    if (!profile) return false;
+    if (isAdminGod) return true;
+    return profile.allowed_pages?.includes(pageKey);
+  }, [profile, isAdminGod]);
+
+  return (
+    <AuthContext.Provider value={{ user: profile, loading, initError, login, logout, refreshUser, isAdminGod, canSeeTotais, hasAccess }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth precisa estar dentro de <AuthProvider>');
+  return ctx;
+}
+
+function DadosPagamento() {
+  return (
+    <div className="panel" style={{ marginBottom: 18 }}>
+      <div className="panel-title">Dados para pagamento</div>
+      <div className="form-grid">
+        <div className="field">
+          <label>Transferência Express</label>
+          <div className="mono">959 823 409</div>
+        </div>
+        <div className="field">
+          <label>IBAN BAI</label>
+          <div className="mono">0040 0000 3066 6927 1014 1</div>
+        </div>
+        <div className="field full">
+          <label>Titular</label>
+          <div>Araújo Artur Cataca</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// COMPONENTES PEQUENOS
+// ============================================================
+function Modal({ title, onClose, children }) {
+  return (
+    <div className="modal-overlay" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="modal">
+        <div className="modal-header">
+          <h3>{title}</h3>
+          <button className="modal-close" onClick={onClose} aria-label="Fechar">×</button>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function StatCard({ label, value, tone = 'neutral' }) {
+  return (
+    <div className="stat-card">
+      <div className="stat-label">{label}</div>
+      <div className={`stat-value ${tone}`}>{formatMoney(value)}</div>
+    </div>
+  );
+}
+
+function MonthlyChart({ data }) {
+  const max = Math.max(1, ...data.map((d) => Math.max(d.entradas, d.saidas)));
+  return (
+    <div>
+      <div className="chart-panel">
+        {data.map((d) => (
+          <div className="chart-bar-group" key={d.mes}>
+            <div className="chart-bars">
+              <div
+                className="chart-bar entradas"
+                title={`Entradas: ${formatMoney(d.entradas)}`}
+                style={{ height: `${(d.entradas / max) * 100}%` }}
+              />
+              <div
+                className="chart-bar saidas"
+                title={`Saídas: ${formatMoney(d.saidas)}`}
+                style={{ height: `${(d.saidas / max) * 100}%` }}
+              />
+            </div>
+            <div className="chart-label">{d.mes}</div>
+          </div>
+        ))}
+      </div>
+      <div className="chart-legend">
+        <span><span className="dot" style={{ background: 'var(--success)' }} /> Entradas</span>
+        <span><span className="dot" style={{ background: 'var(--danger)' }} /> Saídas + despesas + salários</span>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// LAYOUT (sidebar + topo) — navegação por estado, sem rotas de URL
+// ============================================================
+function Layout({ title, subtitle, page, onNavigate, children }) {
+  const { user, logout, isAdminGod, canSeeTotais, hasAccess } = useAuth();
+
+  const visiblePages = PAGES.filter((p) => {
+    if (p.adminOnly) return isAdminGod;
+    if (p.requiresTotais) return canSeeTotais;
+    return hasAccess(p.key);
+  });
+
+  return (
+    <div className="app-shell">
+      <aside className="sidebar">
+        <div className="sidebar-brand">
+          <span className="name">Invites</span>
+          <span className="tag">Gestão Financeira</span>
+        </div>
+
+        <ul className="nav-list">
+          {visiblePages.map((p) => (
+            <li key={p.key}>
+              <button
+                className={`nav-item${page === p.key ? ' active' : ''}`}
+                onClick={() => onNavigate(p.key)}
+              >
+                {p.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div className="sidebar-footer">
+          <div className="sidebar-user">
+            <span className="u-name">{user?.nome}</span>
+            <span className="u-role">{isAdminGod ? 'Admin God' : 'Usuário'}</span>
+          </div>
+          <button className="logout-btn" onClick={logout}>Sair</button>
+        </div>
+      </aside>
+
+      <div className="main">
+        <header className="topbar">
+          <div>
+            <h1>{title}</h1>
+            {subtitle && <div className="subtitle">{subtitle}</div>}
+          </div>
+        </header>
+        <main className="content">{children}</main>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// PÁGINA GENÉRICA DE REGISTROS (Entradas, Saídas, Despesas, Salários, Serviços)
+// ============================================================
+const emptyFromFields = (fields) =>
+  fields.reduce((acc, f) => {
+    if (f.defaultValue !== undefined) acc[f.key] = f.defaultValue;
+    else if (f.type === 'date') acc[f.key] = new Date().toISOString().slice(0, 10);
+    else acc[f.key] = '';
+    return acc;
+  }, {});
+
+function RecordsPage({
+  resource, eyebrow, title, subtitle, fields, getValue, valueLabel = 'Valor',
+  valueFieldKey, renderCell, statusField, statusTones = {}, page, onNavigate,
+  showTotal = true, summaryCardsFn, filterItems, topPanel, pagamentoConfig,
+}) {
+  const { items: rawItems, loading, add, update, remove } = useCollection(resource);
+  const { items: servicosOptions } = useCollection('servicos');
+  const items = useMemo(() => (filterItems ? filterItems(rawItems) : rawItems), [rawItems, filterItems]);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [form, setForm] = useState(emptyFromFields(fields));
+  const [error, setError] = useState('');
+  const [pagandoId, setPagandoId] = useState(null);
+
+  const total = useMemo(() => items.reduce((sum, it) => sum + (getValue(it) || 0), 0), [items, getValue]);
+  const summaryCards = useMemo(() => (summaryCardsFn ? summaryCardsFn(items) : null), [summaryCardsFn, items]);
+  const tableFields = useMemo(() => fields.filter((f) => f.key !== valueFieldKey), [fields, valueFieldKey]);
+
+  async function handlePagar(item) {
+    setPagandoId(item.id);
+    try {
+      const patch = { [statusField]: pagamentoConfig.valuePago };
+      if (pagamentoConfig.dataField) patch[pagamentoConfig.dataField] = new Date().toISOString().slice(0, 10);
+      if (pagamentoConfig.ajustarPatch) {
+        const extra = pagamentoConfig.ajustarPatch(item);
+        if (extra === null) { setPagandoId(null); return; } // cancelado na confirmação
+        Object.assign(patch, extra);
+      }
+      await update(item.id, patch);
+      if (pagamentoConfig.onPago) await pagamentoConfig.onPago({ ...item, ...patch });
+    } catch (err) {
+      alert(err.message || 'Não foi possível registrar o pagamento.');
+    } finally {
+      setPagandoId(null);
+    }
+  }
+
+  function optionsForField(f) {
+    if (f.optionsFrom === 'servicos') {
+      return servicosOptions.filter((s) => s.ativo === 'Sim').map((s) => `${s.nome} — ${s.categoria}`);
+    }
+    return f.options || [];
+  }
+
+  function openNew() { setForm(emptyFromFields(fields)); setEditingId(null); setError(''); setModalOpen(true); }
+  function openEdit(item) { setForm({ ...emptyFromFields(fields), ...item }); setEditingId(item.id); setError(''); setModalOpen(true); }
+  function handleChange(key, value) { setForm((f) => ({ ...f, [key]: value })); }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    for (const f of fields) {
+      if (f.required && !String(form[f.key] ?? '').trim()) {
+        setError(`Preencha o campo "${f.label}".`);
+        return;
+      }
+    }
+    const payload = { ...form };
+    fields.forEach((f) => { if (f.type === 'number') payload[f.key] = Number(payload[f.key] || 0); });
+    try {
+      if (editingId) await update(editingId, payload); else await add(payload);
+      setModalOpen(false);
+    } catch (err) {
+      setError(err.message || 'Não foi possível salvar. Confira os dados e tente de novo.');
+    }
+  }
+
+  async function handleDelete(id) {
+    if (!confirm('Tem certeza que deseja excluir este registro?')) return;
+    try {
+      await remove(id);
+    } catch (err) {
+      alert(err.message || 'Não foi possível excluir este registro.');
+    }
+  }
+
+  return (
+    <Layout title={title} subtitle={subtitle} page={page} onNavigate={onNavigate}>
+      <div className="page-toolbar">
+        <div className="title-block">
+          {eyebrow && <div className="eyebrow">{eyebrow}</div>}
+          <h2>{items.length} registro{items.length === 1 ? '' : 's'}</h2>
+        </div>
+        <button className="btn btn-primary" onClick={openNew}>+ Novo registro</button>
+      </div>
+
+      {topPanel}
+
+      {showTotal && (
+        <div className="stat-grid" style={{ marginBottom: 18, gridTemplateColumns: summaryCards ? undefined : '1fr' }}>
+          {summaryCards ? (
+            summaryCards.map((c) => <StatCard key={c.label} label={c.label} value={c.value} tone={c.tone || 'neutral'} />)
+          ) : (
+            <div className="stat-card">
+              <div className="stat-label">Total em {title}</div>
+              <div className="stat-value neutral">{formatMoney(total)}</div>
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="table-wrap">
+        {loading ? (
+          <div className="empty-state">Carregando…</div>
+        ) : items.length === 0 ? (
+          <div className="empty-state">
+            <div className="big">Nenhum registro ainda</div>
+            <div>Clique em "Novo registro" pra lançar o primeiro.</div>
+          </div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                {tableFields.map((f) => <th key={f.key}>{f.label}</th>)}
+                <th>{valueLabel}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item) => (
+                <tr key={item.id}>
+                  {tableFields.map((f) => (
+                    <td key={f.key}>{renderCell?.(f, item) ?? defaultCell(f, item, statusField, statusTones)}</td>
+                  ))}
+                  <td className="cell-valor">{formatMoney(getValue(item))}</td>
+                  <td>
+                    <div className="row-actions">
+                      {pagamentoConfig && pagamentoConfig.condicao(item) && (
+                        <button className="btn btn-primary btn-sm" disabled={pagandoId === item.id} onClick={() => handlePagar(item)}>
+                          {pagandoId === item.id ? 'Aguarde…' : pagamentoConfig.label}
+                        </button>
+                      )}
+                      {pagamentoConfig?.onPago && !pagamentoConfig.condicao(item) && pagamentoConfig.mostrarReciboSempre && (
+                        <button className="btn btn-ghost btn-sm" onClick={() => pagamentoConfig.onPago(item)}>Recibo</button>
+                      )}
+                      <button className="btn btn-ghost btn-sm" onClick={() => openEdit(item)}>Editar</button>
+                      <button className="btn btn-danger btn-sm" onClick={() => handleDelete(item.id)}>Excluir</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {modalOpen && (
+        <Modal title={editingId ? 'Editar registro' : 'Novo registro'} onClose={() => setModalOpen(false)}>
+          <form onSubmit={handleSubmit}>
+            {error && <div className="form-error">{error}</div>}
+            <div className="form-grid">
+              {fields.map((f) => (
+                <div className={`field ${f.full ? 'full' : ''}`} key={f.key}>
+                  <label>{f.label}{f.required && ' *'}</label>
+                  {f.type === 'select' ? (
+                    <select value={form[f.key] ?? ''} onChange={(e) => handleChange(f.key, e.target.value)}>
+                      <option value="">Selecione…</option>
+                      {optionsForField(f).length === 0 && f.optionsFrom && (
+                        <option value="" disabled>Nenhum serviço ativo encontrado — cadastre em "Serviços"</option>
+                      )}
+                      {optionsForField(f).map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                    </select>
+                  ) : (
+                    <input
+                      type={f.type === 'month' ? 'month' : f.type}
+                      step={f.type === 'number' ? '0.01' : undefined}
+                      value={form[f.key] ?? ''}
+                      onChange={(e) => handleChange(f.key, e.target.value)}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="form-actions">
+              <button type="button" className="btn btn-ghost" onClick={() => setModalOpen(false)}>Cancelar</button>
+              <button type="submit" className="btn btn-primary">Salvar</button>
+            </div>
+          </form>
+        </Modal>
+      )}
+    </Layout>
+  );
+}
+
+function defaultCell(field, item, statusField, statusTones) {
+  const value = item[field.key];
+  if (field.key === statusField) {
+    const tone = statusTones[value] || 'neutral';
+    return <span className={`badge badge-${tone}`}>{value || '—'}</span>;
+  }
+  if (field.type === 'date') return formatDate(value);
+  if (field.type === 'month') return monthLabel(value);
+  if (field.type === 'number') return value ? Number(value).toLocaleString('pt-AO') : '0';
+  return value || '—';
+}
+
+// ============================================================
+// CONFIGURAÇÃO DE CADA MÓDULO
+// ============================================================
+const ENTRADAS_FIELDS = [
+  { key: 'data', label: 'Data', type: 'date', required: true },
+  { key: 'descricao', label: 'Descrição', type: 'text', required: true, full: true },
+  { key: 'categoria', label: 'Categoria', type: 'select', required: true, options: ['Vendas', 'Serviços', 'Investimento', 'Outro'] },
+  { key: 'valor', label: 'Valor (Kz)', type: 'number', required: true },
+  { key: 'servico', label: 'Serviço vendido (opcional)', type: 'select', optionsFrom: 'servicos', full: true },
+  { key: 'forma_pagamento', label: 'Forma de pagamento', type: 'select', options: ['Transferência Express', 'IBAN', 'Dinheiro', 'Cartão', 'Outro'] },
+  { key: 'status', label: 'Status', type: 'select', required: true, options: ['Recebido', 'Pendente'], defaultValue: 'Recebido' },
+  { key: 'data_pagamento', label: 'Data do recebimento', type: 'date' },
+];
+
+const SAIDAS_FIELDS = [
+  { key: 'data', label: 'Data', type: 'date', required: true },
+  { key: 'descricao', label: 'Descrição', type: 'text', required: true, full: true },
+  { key: 'categoria', label: 'Categoria', type: 'select', required: true, options: ['Fornecedores', 'Impostos', 'Transporte', 'Compras', 'Outro'] },
+  { key: 'valor', label: 'Valor (Kz)', type: 'number', required: true },
+  { key: 'forma_pagamento', label: 'Forma de pagamento', type: 'select', options: ['Transferência Express', 'IBAN', 'Dinheiro', 'Cartão', 'Outro'] },
+  { key: 'status', label: 'Status', type: 'select', required: true, options: ['Pago', 'Pendente'], defaultValue: 'Pago' },
+  { key: 'data_pagamento', label: 'Data do pagamento', type: 'date' },
+];
+
+const DESPESAS_FIELDS_BASE = [
+  { key: 'data', label: 'Data', type: 'date', required: true },
+  { key: 'descricao', label: 'Descrição', type: 'text', required: true, full: true },
+  { key: 'categoria', label: 'Categoria', type: 'select', required: true, options: ['Aluguel', 'Internet/Telefone', 'Material de escritório', 'Manutenção', 'Energia/Água', 'Marketing/Publicidade', 'Pessoal', 'Outro'] },
+  { key: 'valor', label: 'Valor (Kz)', type: 'number', required: true },
+  { key: 'recorrente', label: 'Recorrente', type: 'select', options: ['Sim', 'Não'], defaultValue: 'Sim' },
+  { key: 'dia_vencimento', label: 'Dia de vencimento (1-31, opcional)', type: 'number' },
+  { key: 'multa_atraso', label: 'Multa se atrasar (Kz)', type: 'number', defaultValue: 0 },
+  { key: 'status', label: 'Status', type: 'select', required: true, options: ['Pago', 'Pendente'], defaultValue: 'Pago' },
+  { key: 'data_pagamento', label: 'Data do pagamento', type: 'date' },
+  { key: 'historico', label: 'Já estava pago antes deste sistema? (não desconta do saldo)', type: 'select', options: ['Não', 'Sim'], defaultValue: 'Não' },
+];
+function despesasFieldsFor(isAdminGod) {
+  const tipoField = {
+    key: 'tipo', label: 'Tipo', type: 'select', required: true,
+    options: isAdminGod ? ['Empresa', 'Pessoal'] : ['Empresa'],
+    defaultValue: 'Empresa',
+  };
+  return [...DESPESAS_FIELDS_BASE, tipoField];
+}
+
+const SALARIOS_FIELDS = [
+  { key: 'mes_referencia', label: 'Mês de referência', type: 'month', required: true },
+  { key: 'funcionario', label: 'Funcionário', type: 'text', required: true },
+  { key: 'cargo', label: 'Cargo', type: 'text' },
+  { key: 'salario_base', label: 'Salário base (Kz)', type: 'number', required: true },
+  { key: 'bonus', label: 'Bônus (Kz)', type: 'number', defaultValue: 0 },
+  { key: 'descontos', label: 'Descontos (Kz)', type: 'number', defaultValue: 0 },
+  { key: 'status', label: 'Status', type: 'select', required: true, options: ['Pago', 'Pendente'], defaultValue: 'Pendente' },
+  { key: 'data_pagamento', label: 'Data de pagamento', type: 'date' },
+  { key: 'historico', label: 'Já estava pago antes deste sistema? (não desconta do saldo)', type: 'select', options: ['Não', 'Sim'], defaultValue: 'Não' },
+];
+function salarioLiquido(item) {
+  return Number(item.salario_base || 0) + Number(item.bonus || 0) - Number(item.descontos || 0);
+}
+
+const SERVICOS_FIELDS = [
+  { key: 'categoria', label: 'Categoria', type: 'select', required: true,
+    options: ['Web-Convites', 'Premium (com nomes e QR Code)', 'Essenciais (com nomes)', 'Básico (sem nomes)', 'Aniversário Infantil', 'Animação Premium 3D', 'Convites Físicos', 'Outro'] },
+  { key: 'nome', label: 'Nome do pacote/serviço', type: 'text', required: true },
+  { key: 'faixa', label: 'Faixa de convites/observação rápida', type: 'text' },
+  { key: 'preco', label: 'Preço (Kz)', type: 'number', required: true },
+  { key: 'preco_por_unidade', label: 'Esse preço é por unidade?', type: 'select', options: ['Não', 'Sim'], defaultValue: 'Não' },
+  { key: 'prazo_normal_dias', label: 'Prazo normal (dias úteis)', type: 'number', defaultValue: 3 },
+  { key: 'taxa_urgencia', label: 'Taxa de urgência (Kz)', type: 'number', defaultValue: 8000 },
+  { key: 'prazo_urgencia_horas', label: 'Prazo se urgente (horas)', type: 'number', defaultValue: 24 },
+  { key: 'ativo', label: 'Disponível para venda', type: 'select', required: true, options: ['Sim', 'Não'], defaultValue: 'Sim' },
+  { key: 'observacoes', label: 'O que inclui', type: 'text', full: true },
+];
+
+// ============================================================
+// PÁGINAS
+// ============================================================
+function Login() {
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setSubmitting(true);
+    setError('');
+    const result = await login(email, senha);
+    setSubmitting(false);
+    if (!result.ok) setError(result.error);
+  }
+
+  return (
+    <div className="login-page">
+      <div className="login-card">
+        <div className="login-brand">
+          <div className="name">Invites</div>
+          <div className="tag">Gestão Financeira</div>
+        </div>
+        <form onSubmit={handleSubmit}>
+          {error && <div className="form-error">{error}</div>}
+          <div className="field" style={{ marginBottom: 14 }}>
+            <label>E-mail</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoFocus required />
+          </div>
+          <div className="field">
+            <label>Senha</label>
+            <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required />
+          </div>
+          <button type="submit" className="btn btn-primary" disabled={submitting}>
+            {submitting ? 'Entrando…' : 'Entrar'}
+          </button>
+        </form>
+        <div className="login-hint">Não tem login ainda? Fale com o Admin God da sua equipe.</div>
+      </div>
+    </div>
+  );
+}
+
+function Dashboard({ page, onNavigate }) {
+  const { isAdminGod, canSeeTotais } = useAuth();
+  const { items: entradas, loading: l1 } = useCollection('entradas');
+  const { items: saidas, loading: l2 } = useCollection('saidas');
+  const { items: despesasRaw, loading: l3 } = useCollection('despesas');
+  const { items: salarios, loading: l4 } = useCollection('salarios');
+  const { items: encomendas, loading: l5 } = useCollection('encomendas');
+  const { items: saldoInicialRaw, loading: l6 } = useCollection('saldo_inicial');
+  const loading = l1 || l2 || l3 || l4 || l5 || l6;
+
+  const despesasEmpresa = useMemo(() => despesasRaw.filter((i) => i.tipo !== 'Pessoal'), [despesasRaw]);
+  const despesasPessoais = useMemo(() => despesasRaw.filter((i) => i.tipo === 'Pessoal'), [despesasRaw]);
+
+  const sumValor = (arr) => arr.reduce((s, i) => s + Number(i.valor || 0), 0);
+  const sumPago = (arr) => arr.reduce((s, i) => s + Number(i.valor_pago || 0), 0);
+  // itens marcados como "histórico" já estavam pagos antes deste sistema —
+  // não entram no cálculo do Saldo (já estão refletidos no Saldo Inicial)
+  const naoHistorico = (arr) => arr.filter((i) => i.historico !== 'Sim');
+  const totalEntradasLivres = useMemo(() => sumValor(entradas), [entradas]);
+  const totalRecebidoEncomendas = useMemo(() => sumPago(encomendas), [encomendas]);
+  const totalEntradas = totalEntradasLivres + totalRecebidoEncomendas;
+  const totalSaidas = useMemo(() => sumValor(saidas), [saidas]);
+  const totalDespesas = useMemo(() => sumValor(despesasEmpresa), [despesasEmpresa]);
+  const totalDespesasPessoais = useMemo(() => sumValor(despesasPessoais), [despesasPessoais]);
+  const totalSalarios = useMemo(() => salarios.reduce((s, i) => s + salarioLiquido(i), 0), [salarios]);
+  const totalDespesasParaSaldo = useMemo(() => sumValor(naoHistorico(despesasEmpresa)), [despesasEmpresa]);
+  const totalSalariosParaSaldo = useMemo(() => naoHistorico(salarios).reduce((s, i) => s + salarioLiquido(i), 0), [salarios]);
+  const totalSaldoInicial = useMemo(() => sumValor(saldoInicialRaw), [saldoInicialRaw]);
+  const saldo = totalEntradas + totalSaldoInicial - totalSaidas - totalDespesasParaSaldo - totalSalariosParaSaldo;
+
+  // ---------- Alocação automática do caixa disponível ----------
+  // Prioridade: 1º salários, 2º despesas da empresa, 3º despesas pessoais.
+  // "Caixa disponível" = tudo que já entrou (+ saldo inicial) menos o que já
+  // foi de fato pago (saídas + o que já está marcado como Pago, sem contar
+  // o que é histórico — esse já está refletido no Saldo Inicial).
+  const salariosPagos = useMemo(() => naoHistorico(salarios).filter((i) => i.status === 'Pago').reduce((s, i) => s + salarioLiquido(i), 0), [salarios]);
+  const salariosPendentesLista = useMemo(() => salarios.filter((i) => i.status === 'Pendente'), [salarios]);
+  const totalSalariosPendentes = useMemo(() => salariosPendentesLista.reduce((s, i) => s + salarioLiquido(i), 0), [salariosPendentesLista]);
+
+  const despesasEmpresaPagas = useMemo(() => naoHistorico(despesasEmpresa).filter((i) => i.status === 'Pago').reduce((s, i) => s + Number(i.valor || 0), 0), [despesasEmpresa]);
+  const totalDespesasEmpresaPendentes = useMemo(() => despesasEmpresa.filter((i) => i.status === 'Pendente').reduce((s, i) => s + Number(i.valor || 0), 0), [despesasEmpresa]);
+
+  const totalDespesasPessoaisPendentes = useMemo(() => despesasPessoais.filter((i) => i.status === 'Pendente').reduce((s, i) => s + Number(i.valor || 0), 0), [despesasPessoais]);
+
+  const caixaDisponivel = totalEntradas + totalSaldoInicial - totalSaidas - salariosPagos - despesasEmpresaPagas;
+
+  const paraSalarios = Math.min(caixaDisponivel, totalSalariosPendentes);
+  const restoAposSalarios = Math.max(0, caixaDisponivel - totalSalariosPendentes);
+  const faltaSalarios = Math.max(0, totalSalariosPendentes - caixaDisponivel);
+
+  const paraDespesas = Math.min(restoAposSalarios, totalDespesasEmpresaPendentes);
+  const restoAposDespesas = Math.max(0, restoAposSalarios - totalDespesasEmpresaPendentes);
+  const faltaDespesas = Math.max(0, totalDespesasEmpresaPendentes - restoAposSalarios);
+
+  const paraPessoais = Math.min(restoAposDespesas, totalDespesasPessoaisPendentes);
+  const sobraLivre = Math.max(0, restoAposDespesas - totalDespesasPessoaisPendentes);
+  const faltaPessoais = Math.max(0, totalDespesasPessoaisPendentes - restoAposDespesas);
+
+  const chartData = useMemo(() => {
+    const months = [];
+    const now = new Date();
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      months.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`);
+    }
+    return months.map((mk) => {
+      const e = sumValor(entradas.filter((i) => (i.data || '').slice(0, 7) === mk));
+      // o pagamento da encomenda é atribuído ao mês da data de entrada do pedido
+      // (o programa não guarda em qual dia exato cada parcela foi paga)
+      const enc = sumPago(encomendas.filter((i) => (i.data_entrada || '').slice(0, 7) === mk));
+      const s = sumValor(saidas.filter((i) => (i.data || '').slice(0, 7) === mk));
+      const d = sumValor(despesasEmpresa.filter((i) => (i.data || '').slice(0, 7) === mk));
+      const sal = salarios.filter((i) => i.mes_referencia === mk).reduce((sum, i) => sum + salarioLiquido(i), 0);
+      const [y, m] = mk.split('-');
+      return { mes: `${m}/${y.slice(2)}`, entradas: e + enc, saidas: s + d + sal };
+    });
+  }, [entradas, encomendas, saidas, despesasEmpresa, salarios]);
+
+  if (!canSeeTotais) {
+    return (
+      <Layout title="Dashboard" subtitle="Visão geral das finanças da Invites" page={page} onNavigate={onNavigate}>
+        <div className="panel">
+          <div className="empty-state">
+            <div className="big">Totais não liberados</div>
+            <div>O Admin God ainda não liberou pra você ver os totais e relatórios. Você ainda pode usar as outras páginas normalmente.</div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  return (
+    <Layout title="Dashboard" subtitle="Visão geral das finanças da Invites" page={page} onNavigate={onNavigate}>
+      <div className="stat-grid">
+        <StatCard label="Total de entradas" value={totalEntradas} tone="positive" />
+        <StatCard label="— recebido em Encomendas" value={totalRecebidoEncomendas} tone="positive" />
+        <StatCard label="— outras entradas" value={totalEntradasLivres} tone="positive" />
+        <StatCard label="Saldo inicial (antes do sistema)" value={totalSaldoInicial} tone="neutral" />
+        <StatCard label="Total de saídas" value={totalSaidas} tone="negative" />
+        <StatCard label="Total de despesas (empresa)" value={totalDespesas} tone="negative" />
+        <StatCard label="Total de salários" value={totalSalarios} tone="negative" />
+        <StatCard label="Saldo" value={saldo} tone={saldo >= 0 ? 'positive' : 'negative'} />
+        {isAdminGod && <StatCard label="Despesas pessoais (só você vê)" value={totalDespesasPessoais} tone="negative" />}
+      </div>
+      <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: -14, marginBottom: 18 }}>
+        O Saldo não desconta despesas/salários marcados como "já pago antes deste sistema" — esse dinheiro já está refletido no Saldo Inicial.
+      </p>
+
+      <div className="panel" style={{ marginBottom: 18 }}>
+        <div className="panel-title">Pra onde vai o caixa disponível</div>
+        <p style={{ fontSize: 12.5, color: 'var(--muted)', marginTop: -6, marginBottom: 14 }}>
+          Ordem de prioridade: 1º salários pendentes, depois despesas da empresa pendentes
+          {isAdminGod ? ', depois suas despesas pessoais pendentes' : ''}.
+        </p>
+        <div className="stat-grid" style={{ marginBottom: 0 }}>
+          <StatCard label="Caixa disponível agora" value={caixaDisponivel} tone={caixaDisponivel >= 0 ? 'positive' : 'negative'} />
+          <StatCard
+            label={faltaSalarios > 0 ? `Salários — falta ${formatMoney(faltaSalarios)}` : 'Salários pendentes cobertos'}
+            value={paraSalarios} tone={faltaSalarios > 0 ? 'negative' : 'positive'}
+          />
+          <StatCard
+            label={faltaDespesas > 0 ? `Despesas empresa — falta ${formatMoney(faltaDespesas)}` : 'Despesas da empresa cobertas'}
+            value={paraDespesas} tone={faltaDespesas > 0 ? 'negative' : 'positive'}
+          />
+          {isAdminGod && (
+            <StatCard
+              label={faltaPessoais > 0 ? `Despesas pessoais — falta ${formatMoney(faltaPessoais)}` : 'Despesas pessoais cobertas'}
+              value={paraPessoais} tone={faltaPessoais > 0 ? 'negative' : 'positive'}
+            />
+          )}
+          <StatCard label="Sobra livre, depois de cobrir tudo" value={isAdminGod ? sobraLivre : restoAposDespesas} tone="positive" />
+        </div>
+      </div>
+
+      <div className="panel">
+        <div className="panel-title">Entradas x Saídas (últimos 6 meses)</div>
+        {loading ? <div className="empty-state">Carregando…</div> : <MonthlyChart data={chartData} />}
+      </div>
+    </Layout>
+  );
+}
+
+function Entradas({ page, onNavigate }) {
+  const { canSeeTotais } = useAuth();
+  const [mostrarPagamento, setMostrarPagamento] = useState(false);
+  return (
+    <RecordsPage
+      resource="entradas" eyebrow="Receitas" title="Entradas" subtitle="Dinheiro que entrou na empresa"
+      fields={ENTRADAS_FIELDS} getValue={(item) => Number(item.valor || 0)} valueFieldKey="valor"
+      statusField="status" statusTones={{ Recebido: 'success', Pendente: 'warning' }}
+      showTotal={canSeeTotais}
+      pagamentoConfig={{
+        label: 'Marcar como recebido',
+        valuePago: 'Recebido',
+        dataField: 'data_pagamento',
+        condicao: (item) => item.status === 'Pendente',
+      }}
+      topPanel={
+        <div style={{ marginBottom: 14 }}>
+          <button className="btn btn-ghost btn-sm" onClick={() => setMostrarPagamento((v) => !v)}>
+            {mostrarPagamento ? 'Ocultar' : 'Ver'} dados de pagamento
+          </button>
+          {mostrarPagamento && <div style={{ marginTop: 12 }}><DadosPagamento /></div>}
+        </div>
+      }
+      page={page} onNavigate={onNavigate}
+    />
+  );
+}
+
+function Saidas({ page, onNavigate }) {
+  const { canSeeTotais } = useAuth();
+  return (
+    <RecordsPage
+      resource="saidas" eyebrow="Pagamentos diversos" title="Saídas"
+      subtitle="Dinheiro que saiu da empresa (fora despesas fixas e salários)"
+      fields={SAIDAS_FIELDS} getValue={(item) => Number(item.valor || 0)} valueFieldKey="valor"
+      statusField="status" statusTones={{ Pago: 'success', Pendente: 'warning' }}
+      showTotal={canSeeTotais}
+      pagamentoConfig={{
+        label: 'Pagar',
+        valuePago: 'Pago',
+        dataField: 'data_pagamento',
+        condicao: (item) => item.status === 'Pendente',
+      }}
+      page={page} onNavigate={onNavigate}
+    />
+  );
+}
+
+function despesaEstaAtrasada(item) {
+  const diaVenc = Number(item.dia_vencimento || 0);
+  if (item.status !== 'Pendente' || !diaVenc) return false;
+  return new Date().getDate() > diaVenc;
+}
+
+function Despesas({ page, onNavigate }) {
+  const { isAdminGod, canSeeTotais } = useAuth();
+  const fields = useMemo(() => despesasFieldsFor(isAdminGod), [isAdminGod]);
+
+  const filterItems = useCallback(
+    (items) => (isAdminGod ? items : items.filter((i) => i.tipo !== 'Pessoal')),
+    [isAdminGod]
+  );
+
+  return (
+    <RecordsPage
+      resource="despesas" eyebrow="Custos fixos" title="Despesas"
+      subtitle={isAdminGod ? "Custos da empresa e despesas pessoais (só você vê as pessoais)" : "Custos operacionais e recorrentes da empresa"}
+      fields={fields} getValue={(item) => Number(item.valor || 0)} valueFieldKey="valor"
+      statusField="status" statusTones={{ Pago: 'success', Pendente: 'warning' }}
+      showTotal={canSeeTotais}
+      filterItems={filterItems}
+      renderCell={(field, item) => {
+        if (field.key !== 'status') return undefined;
+        if (item.historico === 'Sim') {
+          return <span className="badge badge-neutral" title="Não desconta do Saldo">Histórico</span>;
+        }
+        if (despesaEstaAtrasada(item)) {
+          const multa = Number(item.multa_atraso || 0);
+          return <span className="badge badge-danger">Atrasado{multa > 0 ? ` (+${formatMoney(multa)})` : ''}</span>;
+        }
+        return undefined;
+      }}
+      pagamentoConfig={{
+        label: 'Quitar',
+        valuePago: 'Pago',
+        dataField: 'data_pagamento',
+        condicao: (item) => item.status === 'Pendente',
+        ajustarPatch: (item) => {
+          if (!despesaEstaAtrasada(item)) return {};
+          const multa = Number(item.multa_atraso || 0);
+          if (multa <= 0) return {};
+          const novoValor = Number(item.valor || 0) + multa;
+          const confirmar = confirm(
+            `Esse pagamento está atrasado (vencimento: dia ${item.dia_vencimento}).\nSerá cobrada a multa de ${formatMoney(multa)}, totalizando ${formatMoney(novoValor)}.\n\nConfirmar o pagamento com a multa incluída?`
+          );
+          return confirmar ? { valor: novoValor } : null;
+        },
+      }}
+      summaryCardsFn={isAdminGod ? (items) => {
+        const empresa = items.filter((i) => i.tipo !== 'Pessoal').reduce((s, i) => s + Number(i.valor || 0), 0);
+        const pessoal = items.filter((i) => i.tipo === 'Pessoal').reduce((s, i) => s + Number(i.valor || 0), 0);
+        return [
+          { label: 'Total despesas da empresa', value: empresa, tone: 'negative' },
+          { label: 'Despesas pessoais (só você vê)', value: pessoal, tone: 'negative' },
+        ];
+      } : undefined}
+      page={page} onNavigate={onNavigate}
+    />
+  );
+}
+
+function Salarios({ page, onNavigate }) {
+  const { canSeeTotais } = useAuth();
+  return (
+    <RecordsPage
+      resource="salarios" eyebrow="Folha de pagamento" title="Salários" subtitle="Pagamentos à equipe"
+      fields={SALARIOS_FIELDS} getValue={salarioLiquido} valueLabel="Valor líquido"
+      statusField="status" statusTones={{ Pago: 'success', Pendente: 'warning' }}
+      showTotal={canSeeTotais}
+      renderCell={(field, item) => {
+        if (field.key !== 'status') return undefined;
+        if (item.historico === 'Sim') {
+          return <span className="badge badge-neutral" title="Não desconta do Saldo">Histórico</span>;
+        }
+        return undefined;
+      }}
+      pagamentoConfig={{
+        label: 'Pagar',
+        valuePago: 'Pago',
+        dataField: 'data_pagamento',
+        condicao: (item) => item.status === 'Pendente',
+        onPago: (item) => gerarReciboSalario(item),
+        mostrarReciboSempre: true,
+      }}
+      page={page} onNavigate={onNavigate}
+    />
+  );
+}
+
+function Servicos({ page, onNavigate }) {
+  return (
+    <RecordsPage
+      resource="servicos" eyebrow="Catálogo" title="Serviços" subtitle="Pacotes que a Invites vende — aparecem como opção em Entradas"
+      fields={SERVICOS_FIELDS} getValue={(item) => Number(item.preco || 0)} valueLabel="Preço" valueFieldKey="preco"
+      statusField="ativo" statusTones={{ Sim: 'success', Não: 'neutral' }}
+      page={page} onNavigate={onNavigate}
+    />
+  );
+}
+
+function somarDiasUteis(data, dias) {
+  const resultado = new Date(data);
+  let restantes = dias;
+  while (restantes > 0) {
+    resultado.setDate(resultado.getDate() + 1);
+    const diaDaSemana = resultado.getDay(); // 0 = domingo, 6 = sábado
+    if (diaDaSemana !== 0 && diaDaSemana !== 6) restantes -= 1;
+  }
+  return resultado;
+}
+
+function calcularDataEntrega(dataEntradaStr, servico, urgencia) {
+  if (!dataEntradaStr || !servico) return '';
+  const dataEntrada = new Date(dataEntradaStr + 'T00:00:00');
+  if (urgencia === 'Urgente') {
+    // Urgente: prazo corrido (horas), conta sábado, domingo e feriado normalmente.
+    const horas = Number(servico.prazo_urgencia_horas || 24);
+    const entrega = new Date(dataEntrada.getTime() + horas * 60 * 60 * 1000);
+    return entrega.toISOString().slice(0, 10);
+  }
+  // Normal: prazo em dias ÚTEIS — sábado e domingo não contam.
+  const dias = Number(servico.prazo_normal_dias || 3);
+  const entrega = somarDiasUteis(dataEntrada, dias);
+  return entrega.toISOString().slice(0, 10);
+}
+
+function Encomendas({ page, onNavigate }) {
+  const { items: encomendas, loading, add, update, remove } = useCollection('encomendas');
+  const { items: servicosRaw } = useCollection('servicos');
+  const servicosAtivos = useMemo(() => servicosRaw.filter((s) => s.ativo === 'Sim'), [servicosRaw]);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [mostrarPagamento, setMostrarPagamento] = useState(false);
+  const emptyForm = {
+    cliente: '', servico: '', data_entrada: new Date().toISOString().slice(0, 10),
+    data_entrega: '', urgencia: 'Normal', quantidade: 1, valor_total: '', valor_pago: '',
+    forma_pagamento: '', status: 'Pendente', observacoes: '',
+  };
+  const [form, setForm] = useState(emptyForm);
+  const [error, setError] = useState('');
+
+  const servicoSelecionado = useMemo(
+    () => servicosAtivos.find((s) => `${s.nome} — ${s.categoria}` === form.servico),
+    [servicosAtivos, form.servico]
+  );
+
+  function aplicarAutoCalculo(patch) {
+    setForm((f) => {
+      const novo = { ...f, ...patch };
+      const servico = servicosAtivos.find((s) => `${s.nome} — ${s.categoria}` === novo.servico);
+      if (servico) {
+        const porUnidade = servico.preco_por_unidade === 'Sim';
+        const quantidade = porUnidade ? Math.max(1, Number(novo.quantidade || 1)) : 1;
+        const precoBase = Number(servico.preco || 0) * quantidade + (novo.urgencia === 'Urgente' ? Number(servico.taxa_urgencia || 0) : 0);
+        novo.valor_total = precoBase;
+        novo.data_entrega = calcularDataEntrega(novo.data_entrada, servico, novo.urgencia);
+      }
+      return novo;
+    });
+  }
+
+  function openNew() { setForm(emptyForm); setEditingId(null); setError(''); setModalOpen(true); }
+  function openEdit(item) { setForm({ ...emptyForm, ...item }); setEditingId(item.id); setError(''); setModalOpen(true); }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!form.cliente.trim() || !form.servico) { setError('Preencha o cliente e o serviço.'); return; }
+    const payload = {
+      ...form,
+      quantidade: Number(form.quantidade || 1),
+      valor_total: Number(form.valor_total || 0),
+      valor_pago: Number(form.valor_pago || 0),
+      data_entrega: form.data_entrega || null,
+    };
+    try {
+      if (editingId) await update(editingId, payload); else await add(payload);
+      setModalOpen(false);
+    } catch (err) {
+      setError(err.message || 'Não foi possível salvar. Confira os dados e tente de novo.');
+    }
+  }
+
+  async function handleDelete(id) {
+    if (!confirm('Excluir esta encomenda?')) return;
+    try {
+      await remove(id);
+    } catch (err) {
+      alert(err.message || 'Não foi possível excluir esta encomenda.');
+    }
+  }
+
+  const percentualPago = (item) => {
+    const total = Number(item.valor_total || 0);
+    if (total <= 0) return 0;
+    return Math.round((Number(item.valor_pago || 0) / total) * 100);
+  };
+
+  const hoje = new Date().toISOString().slice(0, 10);
+
+  return (
+    <Layout title="Encomendas" subtitle="Pedidos dos clientes: prazos, urgência e pagamentos" page={page} onNavigate={onNavigate}>
+      <div className="page-toolbar">
+        <div className="title-block">
+          <div className="eyebrow">Trabalhos</div>
+          <h2>{encomendas.length} encomenda{encomendas.length === 1 ? '' : 's'}</h2>
+        </div>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button className="btn btn-ghost" onClick={() => setMostrarPagamento((v) => !v)}>
+            {mostrarPagamento ? 'Ocultar' : 'Ver'} dados de pagamento
+          </button>
+          <button className="btn btn-primary" onClick={openNew}>+ Nova encomenda</button>
+        </div>
+      </div>
+
+      {mostrarPagamento && <DadosPagamento />}
+
+      <div className="table-wrap">
+        {loading ? (
+          <div className="empty-state">Carregando…</div>
+        ) : encomendas.length === 0 ? (
+          <div className="empty-state">
+            <div className="big">Nenhuma encomenda ainda</div>
+            <div>Clique em "Nova encomenda" pra registrar o primeiro pedido.</div>
+          </div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th><th>Serviço</th><th>Entrada</th><th>Entrega</th><th>Urgência</th>
+                <th>Pago</th><th>Status</th><th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {encomendas.map((item) => {
+                const pct = percentualPago(item);
+                const atrasado = item.status === 'Pendente' && item.data_entrega && item.data_entrega < hoje;
+                return (
+                  <tr key={item.id}>
+                    <td>{item.cliente}</td>
+                    <td>{item.servico || '—'}</td>
+                    <td>{formatDate(item.data_entrada)}</td>
+                    <td>{formatDate(item.data_entrega)}</td>
+                    <td><span className={`badge ${item.urgencia === 'Urgente' ? 'badge-danger' : 'badge-neutral'}`}>{item.urgencia}</span></td>
+                    <td className="cell-valor">{formatMoney(item.valor_pago)} <span style={{ color: 'var(--muted)', fontWeight: 400 }}>({pct}%)</span></td>
+                    <td>
+                      {atrasado ? (
+                        <span className="badge badge-danger">Atrasado</span>
+                      ) : (
+                        <span className={`badge ${item.status === 'Concluído' ? 'badge-success' : 'badge-warning'}`}>{item.status}</span>
+                      )}
+                    </td>
+                    <td>
+                      <div className="row-actions">
+                        <button className="btn btn-ghost btn-sm" onClick={() => openEdit(item)}>Editar</button>
+                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(item.id)}>Excluir</button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {modalOpen && (
+        <Modal title={editingId ? 'Editar encomenda' : 'Nova encomenda'} onClose={() => setModalOpen(false)}>
+          <form onSubmit={handleSubmit}>
+            {error && <div className="form-error">{error}</div>}
+            <div className="form-grid">
+              <div className="field full">
+                <label>Cliente *</label>
+                <input value={form.cliente} onChange={(e) => setForm((f) => ({ ...f, cliente: e.target.value }))} />
+              </div>
+              <div className="field full">
+                <label>Serviço *</label>
+                <select value={form.servico} onChange={(e) => aplicarAutoCalculo({ servico: e.target.value })}>
+                  <option value="">Selecione…</option>
+                  {servicosAtivos.length === 0 && <option value="" disabled>Nenhum serviço ativo — cadastre em "Serviços"</option>}
+                  {servicosAtivos.map((s) => (
+                    <option key={s.id} value={`${s.nome} — ${s.categoria}`}>{s.nome} — {s.categoria}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="field">
+                <label>Urgência</label>
+                <select value={form.urgencia} onChange={(e) => aplicarAutoCalculo({ urgencia: e.target.value })}>
+                  <option value="Normal">Normal</option>
+                  <option value="Urgente">Urgente {servicoSelecionado ? `(+${formatMoney(servicoSelecionado.taxa_urgencia)})` : ''}</option>
+                </select>
+              </div>
+              {servicoSelecionado?.preco_por_unidade === 'Sim' && (
+                <div className="field">
+                  <label>Quantidade</label>
+                  <input type="number" min="1" value={form.quantidade} onChange={(e) => aplicarAutoCalculo({ quantidade: e.target.value })} />
+                </div>
+              )}
+              <div className="field">
+                <label>Status</label>
+                <select value={form.status} onChange={(e) => setForm((f) => ({ ...f, status: e.target.value }))}>
+                  <option value="Pendente">Pendente</option>
+                  <option value="Concluído">Concluído</option>
+                </select>
+              </div>
+              <div className="field">
+                <label>Data de entrada</label>
+                <input type="date" value={form.data_entrada} onChange={(e) => aplicarAutoCalculo({ data_entrada: e.target.value })} />
+              </div>
+              <div className="field">
+                <label>Data de entrega (sugerida, pode ajustar)</label>
+                <input type="date" value={form.data_entrega} onChange={(e) => setForm((f) => ({ ...f, data_entrega: e.target.value }))} />
+              </div>
+              <div className="field">
+                <label>Valor total (Kz)</label>
+                <input type="number" step="0.01" value={form.valor_total} onChange={(e) => setForm((f) => ({ ...f, valor_total: e.target.value }))} />
+              </div>
+              <div className="field">
+                <label>Valor pago (Kz)</label>
+                <input type="number" step="0.01" value={form.valor_pago} onChange={(e) => setForm((f) => ({ ...f, valor_pago: e.target.value }))} />
+              </div>
+              <div className="field full">
+                <div className="form-info" style={{ margin: 0 }}>
+                  Percentual pago: <strong>{form.valor_total ? Math.round((Number(form.valor_pago || 0) / Number(form.valor_total || 1)) * 100) : 0}%</strong>
+                  {' '}(calculado automaticamente a partir do valor pago e do valor total)
+                </div>
+              </div>
+              <div className="field full">
+                <label>Forma de pagamento</label>
+                <select value={form.forma_pagamento} onChange={(e) => setForm((f) => ({ ...f, forma_pagamento: e.target.value }))}>
+                  <option value="">Selecione…</option>
+                  <option value="Transferência Express">Transferência Express</option>
+                  <option value="IBAN">IBAN</option>
+                  <option value="Dinheiro">Dinheiro</option>
+                  <option value="Cartão">Cartão</option>
+                  <option value="Outro">Outro</option>
+                </select>
+              </div>
+              <div className="field full">
+                <label>Avisos/observações</label>
+                <input value={form.observacoes} onChange={(e) => setForm((f) => ({ ...f, observacoes: e.target.value }))} />
+              </div>
+            </div>
+            <div className="form-actions">
+              <button type="button" className="btn btn-ghost" onClick={() => setModalOpen(false)}>Cancelar</button>
+              <button type="submit" className="btn btn-primary">Salvar</button>
+            </div>
+          </form>
+        </Modal>
+      )}
+    </Layout>
+  );
+}
+
+const SALDO_INICIAL_FIELDS = [
+  { key: 'data', label: 'Data (de quando esse valor é)', type: 'date' },
+  { key: 'descricao', label: 'Descrição', type: 'text', required: true, full: true },
+  { key: 'valor', label: 'Valor (Kz)', type: 'number', required: true },
+  { key: 'observacoes', label: 'Observações', type: 'text', full: true },
+];
+
+function SaldoInicial({ page, onNavigate }) {
+  return (
+    <RecordsPage
+      resource="saldo_inicial" eyebrow="Configuração" title="Saldo Inicial"
+      subtitle="Dinheiro que a empresa já tinha antes de começar a usar este programa"
+      fields={SALDO_INICIAL_FIELDS} getValue={(item) => Number(item.valor || 0)} valueFieldKey="valor"
+      valueLabel="Valor"
+      page={page} onNavigate={onNavigate}
+    />
+  );
+}
+
+function Usuarios({ page, onNavigate }) {
+  const { items: perfis, loading, update, reload } = useCollection('profiles');
+  const { user: currentUser, refreshUser } = useAuth();
+
+  const emptyForm = { nome: '', email: '', senha: '', allowed_pages: [], ver_totais: false, ativo: true };
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [form, setForm] = useState(emptyForm);
+  const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  function openNew() { setForm(emptyForm); setEditingId(null); setError(''); setModalOpen(true); }
+  function openEdit(p) {
+    setForm({ nome: p.nome, email: p.email, senha: '', allowed_pages: p.allowed_pages || [], ver_totais: !!p.ver_totais, ativo: p.ativo });
+    setEditingId(p.id);
+    setError('');
+    setModalOpen(true);
+  }
+  function togglePage(key) {
+    setForm((f) => ({
+      ...f,
+      allowed_pages: f.allowed_pages.includes(key) ? f.allowed_pages.filter((k) => k !== key) : [...f.allowed_pages, key],
+    }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!form.nome.trim() || !form.email.trim()) { setError('Preencha nome e e-mail.'); return; }
+    if (!editingId && !form.senha.trim()) { setError('Defina uma senha inicial para o novo usuário.'); return; }
+    setSaving(true);
+    setError('');
+    try {
+      if (editingId) {
+        await update(editingId, { nome: form.nome.trim(), allowed_pages: form.allowed_pages, ver_totais: form.ver_totais, ativo: form.ativo });
+        if (form.senha.trim()) {
+          await adminUsersAction({ action: 'reset_password', userId: editingId, password: form.senha.trim() });
+        }
+        if (editingId === currentUser.id) await refreshUser();
+      } else {
+        await adminUsersAction({
+          action: 'create',
+          email: form.email.trim(),
+          password: form.senha.trim(),
+          nome: form.nome.trim(),
+          allowed_pages: form.allowed_pages,
+          ver_totais: form.ver_totais,
+        });
+        await reload();
+      }
+      setModalOpen(false);
+    } catch (err) {
+      setError(err.message || 'Não foi possível salvar. Tente novamente.');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleDelete(p) {
+    if (p.role === 'admin_god') return;
+    if (confirm(`Excluir completamente o login de "${p.nome}"? Essa ação não pode ser desfeita.`)) {
+      try {
+        await adminUsersAction({ action: 'delete', userId: p.id });
+        await reload();
+      } catch (err) {
+        alert(err.message || 'Não foi possível excluir.');
+      }
+    }
+  }
+
+  return (
+    <Layout title="Usuários" subtitle="Crie usuários e defina o que cada um pode acessar" page={page} onNavigate={onNavigate}>
+      <div className="page-toolbar">
+        <div className="title-block">
+          <div className="eyebrow">Admin God</div>
+          <h2>{perfis.length} usuário{perfis.length === 1 ? '' : 's'}</h2>
+        </div>
+        <button className="btn btn-primary" onClick={openNew}>+ Novo usuário</button>
+      </div>
+
+      <div className="table-wrap">
+        {loading ? <div className="empty-state">Carregando…</div> : (
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th><th>E-mail</th><th>Perfil</th><th>Páginas liberadas</th><th>Vê totais?</th><th>Status</th><th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {perfis.map((p) => (
+                <tr key={p.id}>
+                  <td>{p.nome}</td>
+                  <td>{p.email}</td>
+                  <td><span className={`badge ${p.role === 'admin_god' ? 'badge-warning' : 'badge-neutral'}`}>{p.role === 'admin_god' ? 'Admin God' : 'Usuário'}</span></td>
+                  <td>{p.role === 'admin_god' ? 'Tudo' : (p.allowed_pages || []).map((k) => ASSIGNABLE_PAGES.find((pg) => pg.key === k)?.label).join(', ') || '—'}</td>
+                  <td><span className={`badge ${p.role === 'admin_god' || p.ver_totais ? 'badge-success' : 'badge-neutral'}`}>{p.role === 'admin_god' || p.ver_totais ? 'Sim' : 'Não'}</span></td>
+                  <td><span className={`badge ${p.ativo ? 'badge-success' : 'badge-danger'}`}>{p.ativo ? 'Ativo' : 'Desativado'}</span></td>
+                  <td>
+                    <div className="row-actions">
+                      <button className="btn btn-ghost btn-sm" onClick={() => openEdit(p)}>Editar</button>
+                      {p.role !== 'admin_god' && <button className="btn btn-danger btn-sm" onClick={() => handleDelete(p)}>Excluir</button>}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {modalOpen && (
+        <Modal title={editingId ? 'Editar usuário' : 'Novo usuário'} onClose={() => setModalOpen(false)}>
+          <form onSubmit={handleSubmit}>
+            {error && <div className="form-error">{error}</div>}
+            <div className="form-grid">
+              <div className="field">
+                <label>Nome *</label>
+                <input value={form.nome} onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))} />
+              </div>
+              <div className="field">
+                <label>E-mail *{editingId ? ' (não pode ser alterado aqui)' : ''}</label>
+                <input
+                  type="email" value={form.email} disabled={!!editingId}
+                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                />
+              </div>
+              <div className="field">
+                <label>{editingId ? 'Nova senha (opcional)' : 'Senha inicial *'}</label>
+                <input
+                  type="text" value={form.senha}
+                  onChange={(e) => setForm((f) => ({ ...f, senha: e.target.value }))}
+                  placeholder={editingId ? 'Deixe em branco para manter a atual' : 'mínimo 6 caracteres'}
+                />
+              </div>
+              {editingId && (
+                <div className="field">
+                  <label>Status</label>
+                  <select value={form.ativo ? 'ativo' : 'inativo'} onChange={(e) => setForm((f) => ({ ...f, ativo: e.target.value === 'ativo' }))}>
+                    <option value="ativo">Ativo</option>
+                    <option value="inativo">Desativado</option>
+                  </select>
+                </div>
+              )}
+              <div className="field full">
+                <label className="checkbox-row" style={{ display: 'inline-flex' }}>
+                  <input type="checkbox" checked={form.ver_totais} onChange={(e) => setForm((f) => ({ ...f, ver_totais: e.target.checked }))} />
+                  Pode ver totais e relatórios (quanto entrou, quanto saiu, saldo do dia/semana/mês)
+                </label>
+              </div>
+              <div className="field full">
+                <label>Páginas que este usuário pode acessar</label>
+                <div className="checkbox-grid">
+                  {ASSIGNABLE_PAGES.map((pg) => (
+                    <label className="checkbox-row" key={pg.key}>
+                      <input type="checkbox" checked={form.allowed_pages.includes(pg.key)} onChange={() => togglePage(pg.key)} />
+                      {pg.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="form-actions">
+              <button type="button" className="btn btn-ghost" onClick={() => setModalOpen(false)}>Cancelar</button>
+              <button type="submit" className="btn btn-primary" disabled={saving}>{saving ? 'Salvando…' : 'Salvar'}</button>
+            </div>
+          </form>
+        </Modal>
+      )}
+    </Layout>
+  );
+}
+
+// ============================================================
+// RELATÓRIO FINANCEIRO EM PDF
+// ============================================================
+function desenharCabecalhoPDF(doc, subtitulo) {
+  doc.setFillColor(31, 92, 69);
+  doc.rect(0, 0, 210, 32, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(22);
+  doc.text('Invites', 15, 17);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.text('Gestão Financeira', 15, 24);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(13);
+  doc.text(subtitulo, 195, 18, { align: 'right' });
+  doc.setTextColor(20, 32, 27);
+}
+
+function desenharTituloSecao(doc, y, texto) {
+  doc.setFillColor(31, 92, 69);
+  doc.rect(15, y - 5.5, 180, 8, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10.5);
+  doc.text(texto.toUpperCase(), 18, y);
+  doc.setTextColor(20, 32, 27);
+  return y + 12;
+}
+
+function desenharLinhaValor(doc, y, label, valor, opts) {
+  const destaque = opts?.destaque;
+  const corValor = opts?.cor || [20, 32, 27];
+  if (destaque) {
+    doc.setFillColor(241, 244, 239);
+    doc.rect(15, y - 5.5, 180, 8, 'F');
+  }
+  doc.setFont('helvetica', destaque ? 'bold' : 'normal');
+  doc.setFontSize(10.5);
+  doc.setTextColor(20, 32, 27);
+  doc.text(label, 18, y);
+  doc.setTextColor(...corValor);
+  doc.text(formatMoney(valor), 192, y, { align: 'right' });
+  doc.setDrawColor(225, 230, 224);
+  doc.setLineWidth(0.15);
+  doc.line(15, y + 3, 195, y + 3);
+  return y + 10;
+}
+
+function gerarRelatorioPDF(d) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const verde = [46, 125, 91];
+  const vermelho = [168, 67, 47];
+
+  desenharCabecalhoPDF(doc, 'RELATÓRIO FINANCEIRO');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(13);
+  doc.text(d.label, 15, 44);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(91, 103, 96);
+  doc.text(`Período de ${formatDate(d.inicio)} até ${formatDate(d.fim)}`, 15, 50);
+  doc.setTextColor(20, 32, 27);
+
+  let y = 64;
+  y = desenharTituloSecao(doc, y, 'Resumo financeiro');
+  y = desenharLinhaValor(doc, y, 'Total de entradas', d.totalEntradas, { destaque: true, cor: verde });
+  y = desenharLinhaValor(doc, y, '— recebido em Encomendas', d.totalRecebidoEncomendas, { cor: verde });
+  y = desenharLinhaValor(doc, y, '— outras entradas', d.totalEntradasLivres, { cor: verde });
+  y = desenharLinhaValor(doc, y, 'Total de saídas', d.totalSaidas, { cor: vermelho });
+  y = desenharLinhaValor(doc, y, 'Despesas da empresa', d.totalDespesas, { cor: vermelho });
+  y = desenharLinhaValor(doc, y, 'Salários', d.totalSalarios, { cor: vermelho });
+  y = desenharLinhaValor(doc, y, 'SALDO DO PERÍODO', d.saldo, { destaque: true, cor: d.saldo >= 0 ? verde : vermelho });
+
+  y += 6;
+  y = desenharTituloSecao(doc, y, 'Trabalhos e encomendas no período');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10.5);
+  doc.text(`Total de encomendas: ${d.encomendasTotal}`, 18, y);
+  doc.setFont('helvetica', 'normal');
+  doc.text(`Concluídas: ${d.encomendasConcluidas}     Pendentes: ${d.encomendasPendentes}`, 110, y);
+  y += 10;
+  y = desenharLinhaValor(doc, y, 'Valor ainda a receber', d.valorAReceberPeriodo, { destaque: true, cor: vermelho });
+
+  if (d.isAdminGod) {
+    y += 6;
+    y = desenharTituloSecao(doc, y, 'Despesas pessoais (confidencial — só Admin God)');
+    y = desenharLinhaValor(doc, y, 'Despesas pessoais no período', d.totalDespesasPessoais, { destaque: true, cor: vermelho });
+  }
+
+  doc.setFontSize(8);
+  doc.setTextColor(150, 150, 150);
+  doc.text(`Relatório gerado pelo sistema de gestão financeira da Invites em ${new Date().toLocaleString('pt-AO')}.`, 15, 285);
+
+  doc.save(`relatorio-invites-${nomeArquivo(d.label)}-${d.fim}.pdf`);
+}
+
+function periodoParaIntervalo(periodo, personalizado) {
+  const fmt = (d) => d.toISOString().slice(0, 10);
+  const hoje = new Date();
+  const hojeStr = fmt(hoje);
+
+  if (periodo === 'hoje') return { inicio: hojeStr, fim: hojeStr, label: 'Hoje' };
+
+  if (periodo === 'semana') {
+    const ini = new Date(hoje); ini.setDate(hoje.getDate() - 6);
+    return { inicio: fmt(ini), fim: hojeStr, label: 'Últimos 7 dias' };
+  }
+  if (periodo === 'mes') {
+    const ini = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+    return { inicio: fmt(ini), fim: hojeStr, label: 'Este mês' };
+  }
+  if (periodo === 'trimestre') {
+    const trimestreAtual = Math.floor(hoje.getMonth() / 3);
+    const ini = new Date(hoje.getFullYear(), trimestreAtual * 3, 1);
+    return { inicio: fmt(ini), fim: hojeStr, label: `Trimestre atual (${ini.toLocaleString('pt-BR', { month: 'long' })} em diante)` };
+  }
+  if (periodo === 'ultimos3meses') {
+    const ini = new Date(hoje.getFullYear(), hoje.getMonth() - 3, hoje.getDate());
+    return { inicio: fmt(ini), fim: hojeStr, label: 'Últimos 3 meses' };
+  }
+  // personalizado
+  return { inicio: personalizado.inicio || hojeStr, fim: personalizado.fim || hojeStr, label: 'Período personalizado' };
+}
+
+function Relatorios({ page, onNavigate }) {
+  const { isAdminGod } = useAuth();
+  const { items: entradas, loading: l1 } = useCollection('entradas');
+  const { items: saidas, loading: l2 } = useCollection('saidas');
+  const { items: despesasRaw, loading: l3 } = useCollection('despesas');
+  const { items: salarios, loading: l4 } = useCollection('salarios');
+  const { items: encomendas, loading: l5 } = useCollection('encomendas');
+  const loading = l1 || l2 || l3 || l4 || l5;
+
+  const [periodo, setPeriodo] = useState('mes');
+  const [personalizado, setPersonalizado] = useState({ inicio: '', fim: '' });
+
+  const { inicio, fim, label } = useMemo(() => periodoParaIntervalo(periodo, personalizado), [periodo, personalizado]);
+
+  const dentroDoPeriodo = (data) => data && data >= inicio && data <= fim;
+
+  const entradasPeriodo = useMemo(() => entradas.filter((i) => dentroDoPeriodo(i.data)), [entradas, inicio, fim]);
+  const saidasPeriodo = useMemo(() => saidas.filter((i) => dentroDoPeriodo(i.data)), [saidas, inicio, fim]);
+  const despesasEmpresaPeriodo = useMemo(
+    () => despesasRaw.filter((i) => i.tipo !== 'Pessoal' && dentroDoPeriodo(i.data)),
+    [despesasRaw, inicio, fim]
+  );
+  const despesasPessoaisPeriodo = useMemo(
+    () => despesasRaw.filter((i) => i.tipo === 'Pessoal' && dentroDoPeriodo(i.data)),
+    [despesasRaw, inicio, fim]
+  );
+  const salariosPeriodo = useMemo(
+    () => salarios.filter((i) => i.mes_referencia && i.mes_referencia >= inicio.slice(0, 7) && i.mes_referencia <= fim.slice(0, 7)),
+    [salarios, inicio, fim]
+  );
+  const encomendasPeriodo = useMemo(() => encomendas.filter((i) => dentroDoPeriodo(i.data_entrada)), [encomendas, inicio, fim]);
+  const encomendasConcluidas = encomendasPeriodo.filter((i) => i.status === 'Concluído').length;
+  const encomendasPendentes = encomendasPeriodo.filter((i) => i.status === 'Pendente').length;
+  const valorAReceberPeriodo = encomendasPeriodo.reduce((s, i) => s + Math.max(0, Number(i.valor_total || 0) - Number(i.valor_pago || 0)), 0);
+
+  const sumValor = (arr) => arr.reduce((s, i) => s + Number(i.valor || 0), 0);
+  const sumPago = (arr) => arr.reduce((s, i) => s + Number(i.valor_pago || 0), 0);
+  const totalEntradasLivres = sumValor(entradasPeriodo);
+  const totalRecebidoEncomendas = sumPago(encomendasPeriodo);
+  const totalEntradas = totalEntradasLivres + totalRecebidoEncomendas;
+  const totalSaidas = sumValor(saidasPeriodo);
+  const totalDespesas = sumValor(despesasEmpresaPeriodo);
+  const totalDespesasPessoais = sumValor(despesasPessoaisPeriodo);
+  const totalSalarios = salariosPeriodo.reduce((s, i) => s + salarioLiquido(i), 0);
+  const saldo = totalEntradas - totalSaidas - totalDespesas - totalSalarios;
+
+  const periodos = [
+    { key: 'hoje', label: 'Diário (hoje)' },
+    { key: 'semana', label: 'Semanal' },
+    { key: 'mes', label: 'Mensal' },
+    { key: 'trimestre', label: 'Trimestral' },
+    { key: 'ultimos3meses', label: 'Últimos 3 meses' },
+    { key: 'personalizado', label: 'Personalizado' },
+  ];
+
+  return (
+    <Layout title="Relatórios" subtitle="Totais financeiros por período" page={page} onNavigate={onNavigate}>
+      <div className="panel" style={{ marginBottom: 18 }}>
+        <div className="panel-title">Escolha o período</div>
+        <div className="checkbox-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: periodo === 'personalizado' ? 14 : 0 }}>
+          {periodos.map((p) => (
+            <label className="checkbox-row" key={p.key}>
+              <input type="radio" name="periodo" checked={periodo === p.key} onChange={() => setPeriodo(p.key)} />
+              {p.label}
+            </label>
+          ))}
+        </div>
+        {periodo === 'personalizado' && (
+          <div className="form-grid" style={{ marginTop: 10 }}>
+            <div className="field">
+              <label>De</label>
+              <input type="date" value={personalizado.inicio} onChange={(e) => setPersonalizado((f) => ({ ...f, inicio: e.target.value }))} />
+            </div>
+            <div className="field">
+              <label>Até</label>
+              <input type="date" value={personalizado.fim} onChange={(e) => setPersonalizado((f) => ({ ...f, fim: e.target.value }))} />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {loading ? (
+        <div className="empty-state">Carregando…</div>
+      ) : (
+        <React.Fragment>
+          <div className="page-toolbar">
+            <div className="title-block">
+              <div className="eyebrow">{label}</div>
+              <h2>{formatDate(inicio)} até {formatDate(fim)}</h2>
+            </div>
+            <button
+              className="btn btn-primary"
+              onClick={() => gerarRelatorioPDF({
+                label, inicio, fim,
+                totalEntradas, totalEntradasLivres, totalRecebidoEncomendas,
+                totalSaidas, totalDespesas, totalSalarios, saldo,
+                isAdminGod, totalDespesasPessoais,
+                encomendasTotal: encomendasPeriodo.length, encomendasConcluidas, encomendasPendentes, valorAReceberPeriodo,
+              })}
+            >
+              ⬇ Baixar PDF
+            </button>
+          </div>
+          <div className="stat-grid">
+            <StatCard label="Entradas no período" value={totalEntradas} tone="positive" />
+            <StatCard label="— recebido em Encomendas" value={totalRecebidoEncomendas} tone="positive" />
+            <StatCard label="— outras entradas" value={totalEntradasLivres} tone="positive" />
+            <StatCard label="Saídas no período" value={totalSaidas} tone="negative" />
+            <StatCard label="Despesas da empresa no período" value={totalDespesas} tone="negative" />
+            <StatCard label="Salários no período" value={totalSalarios} tone="negative" />
+            <StatCard label="Saldo do período" value={saldo} tone={saldo >= 0 ? 'positive' : 'negative'} />
+            {isAdminGod && <StatCard label="Despesas pessoais no período (só você vê)" value={totalDespesasPessoais} tone="negative" />}
+          </div>
+          <div className="panel" style={{ marginTop: 18 }}>
+            <div className="panel-title">Trabalhos/encomendas no período</div>
+            <div className="stat-grid" style={{ marginBottom: 0 }}>
+              <div className="stat-card">
+                <div className="stat-label">Encomendas no período</div>
+                <div className="stat-value neutral">{encomendasPeriodo.length}</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-label">Concluídas</div>
+                <div className="stat-value positive">{encomendasConcluidas}</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-label">Pendentes</div>
+                <div className="stat-value negative">{encomendasPendentes}</div>
+              </div>
+              <StatCard label="Valor ainda a receber" value={valorAReceberPeriodo} tone="negative" />
+            </div>
+          </div>
+        </React.Fragment>
+      )}
+    </Layout>
+  );
+}
+
+// ============================================================
+// APP
+// ============================================================
+class PageErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, info) {
+    console.error('Erro ao desenhar a página:', error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="login-page">
+          <div className="login-card" style={{ textAlign: 'center' }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, marginBottom: 10 }}>
+              Essa página deu um erro
+            </h2>
+            <p className="mono" style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 18, wordBreak: 'break-word' }}>
+              {this.state.error?.message || 'Erro desconhecido.'}
+            </p>
+            <button className="btn btn-primary" onClick={() => window.location.reload()}>Recarregar página</button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function AppShell() {
+  const { user, loading, initError, isAdminGod, canSeeTotais, hasAccess } = useAuth();
+  const [page, setPage] = useState('dashboard');
+
+  useEffect(() => {
+    if (!user) return;
+    let allowed;
+    if (page === 'usuarios' || page === 'saldo_inicial') allowed = isAdminGod;
+    else if (page === 'relatorios') allowed = canSeeTotais;
+    else allowed = hasAccess(page);
+    if (!allowed) setPage('dashboard');
+  }, [page, user, isAdminGod, canSeeTotais, hasAccess]);
+
+  if (loading) return <div className="app-loading">Carregando…</div>;
+
+  if (initError) {
+    return (
+      <div className="app-loading" style={{ flexDirection: 'column', gap: 14, padding: 24, textAlign: 'center' }}>
+        <div>Não consegui conectar ao Supabase.</div>
+        <div className="mono" style={{ fontSize: 12.5, color: '#cdd9d0', maxWidth: 480 }}>{initError}</div>
+        <button className="btn btn-primary" onClick={() => window.location.reload()}>Tentar de novo</button>
+      </div>
+    );
+  }
+
+  if (!user) return <Login />;
+
+  let conteudo;
+  switch (page) {
+    case 'encomendas': conteudo = <Encomendas page={page} onNavigate={setPage} />; break;
+    case 'entradas': conteudo = <Entradas page={page} onNavigate={setPage} />; break;
+    case 'saidas': conteudo = <Saidas page={page} onNavigate={setPage} />; break;
+    case 'despesas': conteudo = <Despesas page={page} onNavigate={setPage} />; break;
+    case 'salarios': conteudo = <Salarios page={page} onNavigate={setPage} />; break;
+    case 'servicos': conteudo = <Servicos page={page} onNavigate={setPage} />; break;
+    case 'relatorios': conteudo = canSeeTotais ? <Relatorios page={page} onNavigate={setPage} /> : <Dashboard page={page} onNavigate={setPage} />; break;
+    case 'usuarios': conteudo = isAdminGod ? <Usuarios page={page} onNavigate={setPage} /> : <Dashboard page={page} onNavigate={setPage} />; break;
+    case 'saldo_inicial': conteudo = isAdminGod ? <SaldoInicial page={page} onNavigate={setPage} /> : <Dashboard page={page} onNavigate={setPage} />; break;
+    default: conteudo = <Dashboard page={page} onNavigate={setPage} />;
+  }
+
+  return <PageErrorBoundary key={page}>{conteudo}</PageErrorBoundary>;
+}
+
+function App() {
+  return <AuthProvider><AppShell /></AuthProvider>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+</script>
+<script>
+(function () {
+  var code = document.getElementById('app-source').textContent;
+  var output = Babel.transform(code, { presets: ['react'] }).code;
+  (0, eval)(output);
+})();
+</script>
+</body>
+</html>
