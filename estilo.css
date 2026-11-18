@@ -19,11 +19,18 @@ a { color: inherit; }
 
 .capa { position: relative; min-height: 100svh; display: flex; align-items: flex-end; color: #fff; overflow: hidden; }
 /* fundo provisório (até chegarem as fotos do dono): troca-se por uma foto em .capa-fundo { background-image } */
-.capa-fundo { position: absolute; inset: 0; background:
-  radial-gradient(120% 80% at 70% 20%, rgba(176, 141, 87, .35), transparent 60%),
-  radial-gradient(90% 70% at 10% 90%, rgba(120, 90, 60, .35), transparent 60%), var(--escuro); }
-.capa-fundo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 40%, rgba(15, 14, 12, .75)); }
-.capa-txt { position: relative; padding: 0 24px max(56px, env(safe-area-inset-bottom)); max-width: 720px; }
+.capa-fundo { position: absolute; inset: 0; background: var(--escuro); }
+.capa-fundo::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(rgba(15, 14, 12, .4), transparent 22%, rgba(15, 14, 12, .25) 40%, rgba(15, 14, 12, .9) 78%); }
+/* slide da capa: as fotos trocam a cada 6 s, a esbater, com um zoom lento */
+.slide { position: absolute; inset: 0; background: center 28% / cover no-repeat; opacity: 0; transform: scale(1.08); transition: opacity 1.4s ease, transform 7s linear; }
+.slide.ativo { opacity: 1; transform: scale(1); }
+.capa-tipo { position: absolute; right: 20px; bottom: max(64px, calc(env(safe-area-inset-bottom) + 56px)); z-index: 2; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255, 255, 255, .8); text-decoration: none; }
+.capa-tipo span { color: #fff; font-weight: 500; }
+.capa-pontos { position: absolute; right: 20px; bottom: max(40px, calc(env(safe-area-inset-bottom) + 30px)); z-index: 2; display: flex; gap: 8px; }
+.capa-pontos i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, .4); transition: background .3s, transform .3s; }
+.capa-pontos i.ativo { background: var(--ouro); transform: scale(1.3); }
+@media (max-width: 640px) { .capa-tipo, .capa-pontos { right: auto; left: 24px; } .capa-tipo { bottom: 22px; } .capa-pontos { bottom: auto; top: max(70px, calc(env(safe-area-inset-top) + 56px)); } }
+.capa-txt { position: relative; z-index: 2; padding: 0 24px max(56px, env(safe-area-inset-bottom)); max-width: 720px; }
 .pre { margin: 0 0 10px; font: 500 12px/1 var(--f-txt); letter-spacing: .3em; text-transform: uppercase; color: var(--ouro); }
 h1 { margin: 0; font: 500 clamp(40px, 10vw, 76px)/1.02 var(--f-tit); }
 h1 em { font-weight: 400; color: #e8d6b5; }
@@ -69,3 +76,5 @@ a.cartao:hover { border-color: var(--ouro); transform: translateY(-2px); }
 .lb .lb-fechar { top: max(14px, env(safe-area-inset-top)); right: 14px; }
 .lb .lb-ant { left: 10px; top: 50%; transform: translateY(-50%); } .lb .lb-seg { right: 10px; top: 50%; transform: translateY(-50%); }
 .lb .lb-n { position: absolute; bottom: max(16px, env(safe-area-inset-bottom)); left: 0; right: 0; text-align: center; color: rgba(255, 255, 255, .7); font-size: 13px; letter-spacing: .12em; }
+
+.capa .pre { text-shadow: 0 1px 8px rgba(0, 0, 0, .6); } .capa h1, .capa .sub { text-shadow: 0 2px 14px rgba(0, 0, 0, .45); }

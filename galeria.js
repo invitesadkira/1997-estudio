@@ -16,3 +16,13 @@
   let x0 = null; lb.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
   lb.addEventListener('touchend', (e) => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) mover(dx < 0 ? 1 : -1); x0 = null; });
 })();
+
+/* Slide da capa: uma foto por tipo de evento, troca a cada 6 s (para quando o separador está escondido) */
+(() => {
+  const ss = [...document.querySelectorAll('#slides .slide')], tipo = document.getElementById('capa-tipo'), pts = document.getElementById('capa-pontos');
+  if (ss.length < 2) return;
+  pts.innerHTML = ss.map(() => '<i></i>').join(''); const ps = [...pts.children]; let i = 0;
+  const ver = (k) => { ss[i].classList.remove('ativo'); ps[i].classList.remove('ativo'); i = k; ss[i].classList.add('ativo'); ps[i].classList.add('ativo');
+    tipo.href = ss[i].getAttribute('href'); tipo.firstElementChild.textContent = ss[i].dataset.tipo; };
+  ver(0); setInterval(() => { if (!document.hidden) ver((i + 1) % ss.length); }, 6000);
+})();

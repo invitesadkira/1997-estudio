@@ -11,32 +11,38 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=2">
+<link rel="stylesheet" href="estilo.css?v=4">
 </head>
 <body>
 <header class="topo">
   <a class="marca" href="#inicio" aria-label="1997 Estúdio — início"><span class="ano">1997</span><span class="nome">Estúdio</span></a>
   <nav class="menu" aria-label="Menu">
-    <a href="#servicos">Serviços</a><a href="#aniversarios">Portefólio</a><a href="#plataforma">Plataforma 360º</a><a href="#contacto">Contacto</a>
+    <a href="#servicos">Serviços</a><a href="#casamentos">Portefólio</a><a href="#plataforma">Plataforma 360º</a><a href="#contacto">Contacto</a>
   </nav>
 </header>
 
 <main>
   <section class="capa" id="inicio">
-    <div class="capa-fundo" aria-hidden="true"></div>
+    <!-- SLIDE DA CAPA: uma foto por tipo de evento (data-tipo = nome por baixo; href = galeria). Acrescentar um <a class="slide"> por tipo novo. -->
+    <div class="capa-fundo" id="slides">
+      <a class="slide ativo" href="#casamentos" data-tipo="Casamentos" style="background-image:url(fotos/casamentos/cas-01-v1.webp)" aria-label="Casamentos"></a>
+      <a class="slide" href="#aniversarios" data-tipo="Aniversários" style="background-image:url(fotos/aniversarios/aniv-02-v1.webp)" aria-label="Aniversários"></a>
+    </div>
     <div class="capa-txt">
       <p class="pre">Fotografia &amp; vídeo</p>
       <h1>Os momentos que ficam<br><em>para sempre</em></h1>
       <p class="sub">Casamentos, alambamentos, noivados e aniversários — contados com luz, emoção e cuidado em cada detalhe.</p>
       <a class="bt" href="#contacto">Pedir orçamento</a>
     </div>
+    <a class="capa-tipo" id="capa-tipo" href="#casamentos"><span>Casamentos</span> · ver fotos</a>
+    <div class="capa-pontos" id="capa-pontos" aria-hidden="true"></div>
   </section>
 
   <section class="sec" id="servicos">
     <p class="pre">O que fazemos</p>
     <h2>Serviços</h2>
     <div class="cartoes">
-      <article class="cartao"><h3>Casamentos</h3><p>Do «sim» à festa: reportagem fotográfica e filme do vosso dia.</p></article>
+      <a class="cartao" href="#casamentos"><h3>Casamentos</h3><p>Do «sim» à festa: reportagem fotográfica e filme do vosso dia.</p><span class="ver">Ver fotos</span></a>
       <article class="cartao"><h3>Alambamentos</h3><p>A tradição e a família, registadas com respeito e alegria.</p></article>
       <article class="cartao"><h3>Noivados</h3><p>Sessões a dois e o pedido, para guardar o começo de tudo.</p></article>
       <a class="cartao" href="#aniversarios"><h3>Aniversários</h3><p>Festas de todas as idades, das crianças aos grandes marcos.</p><span class="ver">Ver fotos</span></a>
@@ -46,6 +52,22 @@
   </section>
 
   <!-- GALERIAS (uma secção por tipo de evento; fotos em fotos/<tipo>/, -p = pequena para a grelha) -->
+  <section class="sec galeria" id="casamentos">
+    <p class="pre">Portefólio</p>
+    <h2>Casamentos</h2>
+    <div class="gal">
+      <a class="gal-it" href="fotos/casamentos/cas-01-v1.webp"><img src="fotos/casamentos/cas-01-p-v1.webp" alt="Os noivos abraçados nas escadas" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/casamentos/cas-02-v1.webp"><img src="fotos/casamentos/cas-02-p-v1.webp" alt="A noiva com o ramo de rosas brancas" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/casamentos/cas-03-v1.webp"><img src="fotos/casamentos/cas-03-p-v1.webp" alt="Os noivos de fato branco" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/casamentos/cas-04-v1.webp"><img src="fotos/casamentos/cas-04-p-v1.webp" alt="A cauda do vestido no corredor" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/casamentos/cas-05-v1.webp"><img src="fotos/casamentos/cas-05-p-v1.webp" alt="A noiva sentada com o vestido aberto" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/casamentos/cas-06-v1.webp"><img src="fotos/casamentos/cas-06-p-v1.webp" alt="Pormenor do fato do noivo, a preto e branco" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/casamentos/cas-07-v1.webp"><img src="fotos/casamentos/cas-07-p-v1.webp" alt="A noiva com as damas de honor" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/casamentos/cas-08-v1.webp"><img src="fotos/casamentos/cas-08-p-v1.webp" alt="Os noivos no jardim" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/casamentos/cas-09-v1.webp"><img src="fotos/casamentos/cas-09-p-v1.webp" alt="O corte do bolo" loading="lazy" decoding="async"></a>
+    </div>
+  </section>
+
   <section class="sec galeria" id="aniversarios">
     <p class="pre">Portefólio</p>
     <h2>Aniversários</h2>
@@ -81,6 +103,6 @@
   <p><b>1997 Estúdio</b> · uma marca <span>Adkira</span></p>
   <p class="pq">Luanda, Angola</p>
 </footer>
-<script src="galeria.js?v=1" defer></script>
+<script src="galeria.js?v=2" defer></script>
 </body>
 </html>

@@ -13,7 +13,9 @@
   imutáveis → subir `estilo.css?v=N` no index.html quando o CSS muda). Vídeos pesados não no git (> 25 MB não publica).
 - GALERIAS: uma `<section class="sec galeria" id="<tipo>">` por tipo de evento, com `.gal > a.gal-it` (href = foto grande
   1500 px, img = `-p` 640 px, ambas .webp `-v1`); `galeria.js` abre em grande (setas, deslizar, Esc). Fotos escolhidas pelo
-  Claude (6–9 por tipo, sobretudo ao alto, variadas); originais do dono em `G:\Para Site\<tipo>\`. 18/11/2026: Aniversários (9).
+  Claude (6–9 por tipo, sobretudo ao alto, variadas); originais do dono em `G:\Para Site\<tipo>\`. 18/11/2026: Casamentos (9) e Aniversários (9).
+- SLIDE DA CAPA: uma foto por tipo de evento (`#slides > a.slide`, data-tipo = nome por baixo, href = galeria; troca a cada 6 s,
+  em galeria.js). Cada tipo novo: juntar a galeria E um slide.
   Evitar fotos com personagens de filmes/marcas (ex.: bolo com figura da Disney).
 - Estado (18/11/2026): página provisória (capa, serviços, plataforma 360º, contacto) com `noindex`. Faltam as fotos, os
   vídeos e os contactos (WhatsApp/Instagram) que o dono vai dar. Tirar o `noindex` quando estiver pronto.
