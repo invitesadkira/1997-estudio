@@ -11,6 +11,10 @@
   (o dono não quer domínio pago por agora). Cada push para `main` publica sozinho.
 - Regras: telemóvel primeiro; fotos em `fotos/` em .webp leves (nome novo ao trocar uma foto: `_headers` põe /fotos/* e *.css
   imutáveis → subir `estilo.css?v=N` no index.html quando o CSS muda). Vídeos pesados não no git (> 25 MB não publica).
+- GALERIAS: uma `<section class="sec galeria" id="<tipo>">` por tipo de evento, com `.gal > a.gal-it` (href = foto grande
+  1500 px, img = `-p` 640 px, ambas .webp `-v1`); `galeria.js` abre em grande (setas, deslizar, Esc). Fotos escolhidas pelo
+  Claude (6–9 por tipo, sobretudo ao alto, variadas); originais do dono em `G:\Para Site\<tipo>\`. 18/11/2026: Aniversários (9).
+  Evitar fotos com personagens de filmes/marcas (ex.: bolo com figura da Disney).
 - Estado (18/11/2026): página provisória (capa, serviços, plataforma 360º, contacto) com `noindex`. Faltam as fotos, os
   vídeos e os contactos (WhatsApp/Instagram) que o dono vai dar. Tirar o `noindex` quando estiver pronto.
 - Mostrar ao dono e pedir o OK antes de cada push (como no InviteSão). Dados de exemplo sempre angolanos e inventados.

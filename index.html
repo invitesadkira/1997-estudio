@@ -11,13 +11,13 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=1">
+<link rel="stylesheet" href="estilo.css?v=2">
 </head>
 <body>
 <header class="topo">
   <a class="marca" href="#inicio" aria-label="1997 Estúdio — início"><span class="ano">1997</span><span class="nome">Estúdio</span></a>
   <nav class="menu" aria-label="Menu">
-    <a href="#servicos">Serviços</a><a href="#plataforma">Plataforma 360º</a><a href="#contacto">Contacto</a>
+    <a href="#servicos">Serviços</a><a href="#aniversarios">Portefólio</a><a href="#plataforma">Plataforma 360º</a><a href="#contacto">Contacto</a>
   </nav>
 </header>
 
@@ -39,9 +39,26 @@
       <article class="cartao"><h3>Casamentos</h3><p>Do «sim» à festa: reportagem fotográfica e filme do vosso dia.</p></article>
       <article class="cartao"><h3>Alambamentos</h3><p>A tradição e a família, registadas com respeito e alegria.</p></article>
       <article class="cartao"><h3>Noivados</h3><p>Sessões a dois e o pedido, para guardar o começo de tudo.</p></article>
-      <article class="cartao"><h3>Aniversários</h3><p>Festas de todas as idades, das crianças aos grandes marcos.</p></article>
+      <a class="cartao" href="#aniversarios"><h3>Aniversários</h3><p>Festas de todas as idades, das crianças aos grandes marcos.</p><span class="ver">Ver fotos</span></a>
       <article class="cartao"><h3>Fotografia</h3><p>Retratos, sessões em estúdio e no exterior, com edição cuidada.</p></article>
       <article class="cartao"><h3>Vídeo</h3><p>Filmes, resumos para as redes sociais e momentos em câmara lenta.</p></article>
+    </div>
+  </section>
+
+  <!-- GALERIAS (uma secção por tipo de evento; fotos em fotos/<tipo>/, -p = pequena para a grelha) -->
+  <section class="sec galeria" id="aniversarios">
+    <p class="pre">Portefólio</p>
+    <h2>Aniversários</h2>
+    <div class="gal">
+      <a class="gal-it" href="fotos/aniversarios/aniv-01-v1.webp"><img src="fotos/aniversarios/aniv-01-p-v1.webp" alt="Menino de colete na sua festa de aniversário" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/aniversarios/aniv-02-v1.webp"><img src="fotos/aniversarios/aniv-02-p-v1.webp" alt="Pai com o filho ao colo na festa de 1 ano" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/aniversarios/aniv-03-v1.webp"><img src="fotos/aniversarios/aniv-03-p-v1.webp" alt="Aniversariante a rir com as amigas" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/aniversarios/aniv-04-v1.webp"><img src="fotos/aniversarios/aniv-04-p-v1.webp" alt="Aniversário de 18 anos, vestido rosa" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/aniversarios/aniv-05-v1.webp"><img src="fotos/aniversarios/aniv-05-p-v1.webp" alt="Menina de laço na festa colorida" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/aniversarios/aniv-06-v1.webp"><img src="fotos/aniversarios/aniv-06-p-v1.webp" alt="Bolo dourado de aniversário" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/aniversarios/aniv-07-v1.webp"><img src="fotos/aniversarios/aniv-07-p-v1.webp" alt="Menino a mandar um beijo" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/aniversarios/aniv-08-v1.webp"><img src="fotos/aniversarios/aniv-08-p-v1.webp" alt="Mesa decorada em rosa e prata" loading="lazy" decoding="async"></a>
+      <a class="gal-it" href="fotos/aniversarios/aniv-09-v1.webp"><img src="fotos/aniversarios/aniv-09-p-v1.webp" alt="Aniversariante de 30 anos com o ramo" loading="lazy" decoding="async"></a>
     </div>
   </section>
 
@@ -64,5 +81,6 @@
   <p><b>1997 Estúdio</b> · uma marca <span>Adkira</span></p>
   <p class="pq">Luanda, Angola</p>
 </footer>
+<script src="galeria.js?v=1" defer></script>
 </body>
 </html>
