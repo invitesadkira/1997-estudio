@@ -11,7 +11,7 @@
 <link rel="icon" href="icone.png" type="image/png"><link rel="apple-touch-icon" href="icone.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
-<link rel="stylesheet" href="estilo.css?v=7">
+<link rel="stylesheet" href="estilo.css?v=8">
 </head>
 <body class="no-inicio">
 <!-- O SITE É UMA SÓ PÁGINA COM «PÁGINAS» (.pagina[data-pag]): o menu mostra só a escolhida (#portefolio, #precos…), sem rolar.
@@ -32,9 +32,9 @@
       <!-- SLIDE DA CAPA: uma foto por tipo de evento (data-tipo = nome; href = portefólio desse tipo). -->
       <div class="capa-fundo" id="slides">
         <a class="slide ativo" href="#portefolio/casamentos" data-tipo="Casamentos" style="background-image:url(fotos/casamentos/cas-01-v1.webp)" aria-label="Casamentos"></a>
-        <a class="slide" href="#portefolio/pre-wedding" data-tipo="Pré-wedding" style="background-image:url(fotos/pre-wedding/pre-01-v1.webp)" aria-label="Pré-wedding"></a>
-        <a class="slide" href="#portefolio/noivados" data-tipo="Noivados" style="background-image:url(fotos/noivados/noiv-01-v1.webp)" aria-label="Noivados"></a>
-        <a class="slide" href="#portefolio/aniversarios" data-tipo="Aniversários" style="background-image:url(fotos/aniversarios/aniv-02-v1.webp)" aria-label="Aniversários"></a>
+        <a class="slide" href="#portefolio/pre-wedding" data-tipo="Pré-wedding" data-bg="fotos/pre-wedding/pre-01-v1.webp" aria-label="Pré-wedding"></a>
+        <a class="slide" href="#portefolio/noivados" data-tipo="Noivados" data-bg="fotos/noivados/noiv-01-v1.webp" aria-label="Noivados"></a>
+        <a class="slide" href="#portefolio/aniversarios" data-tipo="Aniversários" data-bg="fotos/aniversarios/aniv-02-v1.webp" aria-label="Aniversários"></a>
       </div>
       <div class="capa-txt">
         <p class="rotulo">Fotografia &amp; vídeo — Luanda</p>
@@ -50,8 +50,8 @@
 
   <!-- PORTEFÓLIO: um carrossel 3D por tipo de evento (separadores) -->
   <section class="pagina" data-pag="portefolio" hidden>
+    <div class="pag-capa" id="capa-portefolio" data-bg="fotos/casamentos/cas-03-v1.webp"><div class="pag-capa-txt"><p class="rotulo">Portefólio</p><h2>O nosso <em>trabalho</em></h2></div></div>
     <div class="sec">
-      <header class="sec-cab"><p class="rotulo">Portefólio</p><h2>O nosso <em>trabalho</em></h2></header>
       <div class="abas" role="tablist">
         <button type="button" class="aba ativa" data-cat="casamentos" role="tab">Casamentos</button>
         <button type="button" class="aba" data-cat="pre-wedding" role="tab">Pré-wedding</button>
@@ -117,8 +117,8 @@
 
   <!-- SERVIÇOS -->
   <section class="pagina" data-pag="servicos" hidden>
+    <div class="pag-capa" data-bg="fotos/pre-wedding/pre-02-v1.webp"><div class="pag-capa-txt"><p class="rotulo">Serviços</p><h2>O que <em>fazemos</em></h2></div></div>
     <div class="sec">
-      <header class="sec-cab"><p class="rotulo">Serviços</p><h2>O que <em>fazemos</em></h2></header>
       <ol class="lista">
         <li><a href="#portefolio/casamentos"><span class="n">01</span><b>Casamentos</b><span class="d">Do «sim» à festa: reportagem e filme do vosso dia.</span><i class="ir" aria-hidden="true">→</i></a></li>
         <li><a href="#portefolio/pre-wedding"><span class="n">02</span><b>Pré-wedding</b><span class="d">Uma sessão a dois antes do casamento — na praia, na cidade, ao pôr do sol.</span><i class="ir" aria-hidden="true">→</i></a></li>
@@ -134,8 +134,8 @@
 
   <!-- PREÇOS: pacotes de casamento (dados do dono, 18/11/2026) -->
   <section class="pagina" data-pag="precos" hidden>
+    <div class="pag-capa" data-bg="fotos/casamentos/cas-02-v1.webp"><div class="pag-capa-txt"><p class="rotulo">Pacotes de casamento</p><h2>Escolha o <em>vosso</em> pacote</h2></div></div>
     <div class="sec">
-      <header class="sec-cab"><p class="rotulo">Pacotes de casamento</p><h2>Escolha o <em>vosso</em> pacote</h2></header>
       <div class="pacotes">
         <article class="pacote">
           <span class="n">01</span><h3>Pacote 1</h3>
@@ -160,20 +160,18 @@
   </section>
 
   <!-- PLATAFORMA 360º -->
-  <section class="pagina faixa" data-pag="plataforma" hidden>
-    <div class="faixa-in">
-      <p class="rotulo">Para alugar</p>
-      <h2>Plataforma <em>360º</em></h2>
+  <section class="pagina" data-pag="plataforma" hidden>
+    <div class="pag-capa" data-bg="fotos/aniversarios/aniv-03-v1.webp"><div class="pag-capa-txt"><p class="rotulo">Para alugar</p><h2>Plataforma <em>360º</em></h2></div></div>
+    <div class="faixa"><div class="faixa-in">
       <p>Os convidados sobem à plataforma e a câmara gira à volta deles: vídeos em câmara lenta, prontos a partilhar na hora. A atração que anima qualquer festa.</p>
       <a class="bt-wa claro" href="https://wa.me/244929773698?text=Ol%C3%A1%201997%20Studios%21%20Quero%20alugar%20a%20plataforma%20360%C2%BA." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3 1 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.2-.2-.4-.3z"/></svg>Reservar a plataforma</a>
-    </div>
+    </div></div>
   </section>
 
   <!-- CONTACTO -->
   <section class="pagina" data-pag="contacto" hidden>
+    <div class="pag-capa" data-bg="fotos/noivados/noiv-08-v1.webp"><div class="pag-capa-txt"><p class="rotulo">Contacto</p><h2>Vamos contar a <em>vossa</em> história?</h2></div></div>
     <div class="sec contacto">
-      <p class="rotulo">Contacto</p>
-      <h2>Vamos contar a <em>vossa</em> história?</h2>
       <p class="txt">Diga-nos a data e o tipo de evento — enviamos uma proposta.</p>
       <a class="bt-wa" href="https://wa.me/244929773698?text=Ol%C3%A1%201997%20Studios%21%20Gostava%20de%20pedir%20um%20or%C3%A7amento." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3 1 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.2-.2-.4-.3z"/></svg>929 773 698</a>
       <div class="redes grandes"><a href="https://wa.me/244929773698" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3 1 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.2-.2-.4-.3z"/></svg></a><a href="https://www.instagram.com/1997studio8/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a><a href="https://www.facebook.com/1997Fotografo" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z"/></svg></a><a href="https://www.tiktok.com/@1997studio8" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.6 3c.4 2.2 1.8 3.6 4 3.8v3.1c-1.5.1-2.8-.4-4-1.2v6.1c0 3.4-2.4 5.9-5.7 5.9A5.7 5.7 0 0 1 5.2 15c0-3.4 2.9-6 6.4-5.6v3.2c-1.6-.4-3.2.7-3.2 2.4 0 1.4 1.1 2.5 2.5 2.5 1.6 0 2.5-1.1 2.5-2.9V3h3.2z"/></svg></a></div>
@@ -186,6 +184,6 @@
   <span class="redes"><a href="https://wa.me/244929773698" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3 1 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.2-.2-.4-.3z"/></svg></a><a href="https://www.instagram.com/1997studio8/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a><a href="https://www.facebook.com/1997Fotografo" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z"/></svg></a><a href="https://www.tiktok.com/@1997studio8" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.6 3c.4 2.2 1.8 3.6 4 3.8v3.1c-1.5.1-2.8-.4-4-1.2v6.1c0 3.4-2.4 5.9-5.7 5.9A5.7 5.7 0 0 1 5.2 15c0-3.4 2.9-6 6.4-5.6v3.2c-1.6-.4-3.2.7-3.2 2.4 0 1.4 1.1 2.5 2.5 2.5 1.6 0 2.5-1.1 2.5-2.9V3h3.2z"/></svg></a></span>
 </footer>
 <a class="wa-flutua" href="https://wa.me/244929773698?text=Ol%C3%A1%201997%20Studios%21" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3 1 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.2-.2-.4-.3z"/></svg></a>
-<script src="galeria.js?v=4" defer></script>
+<script src="galeria.js?v=5" defer></script>
 </body>
 </html>

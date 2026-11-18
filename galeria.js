@@ -10,11 +10,17 @@
     const nome = nomes.includes(pag) ? pag : 'inicio';
     paginas.forEach((p) => { p.hidden = p.dataset.pag !== nome; });
     document.body.classList.toggle('no-inicio', nome === 'inicio');
+    const pg = paginas.find((p) => p.dataset.pag === nome); capaAtual = pg.querySelector('.capa, .pag-capa');
+    if (capaAtual && capaAtual.dataset.bg && nome !== 'portefolio') { capaAtual.style.backgroundImage = 'url(' + capaAtual.dataset.bg + ')'; delete capaAtual.dataset.bg; }   // a foto de capa só carrega quando a página abre
     $$('.menu > a').forEach((a) => a.classList.toggle('ativo', a.getAttribute('href') === '#' + nome));
     document.body.classList.remove('menu-aberto'); $('#abrir-menu').setAttribute('aria-expanded', 'false');
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); topoClaro();
     if (nome === 'portefolio') { tipoPedido = sub || tipoPedido; mostrarTipo(sub || ($('.aba.ativa') || {}).dataset?.cat); }
   }
+  let capaAtual = null;
+  // topo transparente (logótipo branco) enquanto a foto de capa da página está por baixo dele
+  const topoClaro = () => document.body.classList.toggle('topo-claro', !!capaAtual && window.scrollY < capaAtual.offsetHeight - 70);
+  addEventListener('scroll', topoClaro, { passive: true });
   addEventListener('hashchange', irPara);
   $('#abrir-menu').addEventListener('click', () => { const ab = document.body.classList.toggle('menu-aberto'); $('#abrir-menu').setAttribute('aria-expanded', String(ab)); });
 
@@ -24,6 +30,7 @@
     pts.innerHTML = ss.map(() => '<i></i>').join(''); const ps = [...pts.children]; let i = 0;
     const ver = (k) => { ss[i].classList.remove('ativo'); ps[i].classList.remove('ativo'); i = k; ss[i].classList.add('ativo'); ps[i].classList.add('ativo');
       tipo.href = ss[i].getAttribute('href'); tipo.firstElementChild.textContent = String(i + 1).padStart(2, '0') + ' — ' + ss[i].dataset.tipo; };
+    addEventListener('load', () => setTimeout(() => ss.forEach((e) => { if (e.dataset.bg) { e.style.backgroundImage = 'url(' + e.dataset.bg + ')'; delete e.dataset.bg; } }), 800));
     ver(0); setInterval(() => { if (!document.hidden && !$('.pagina[data-pag="inicio"]').hidden) ver((i + 1) % ss.length); }, 6000);
   }
 
@@ -37,9 +44,10 @@
         const d = k - i, a = Math.abs(d), lado = Math.sign(d);
         const x = d === 0 ? 0 : lado * (passo * .55 + passo * .55 * a), z = -a * 170, r = -lado * Math.min(48, 28 + a * 6);
         it.style.transform = 'translate(calc(-50% + ' + x + 'px), -50%) translateZ(' + z + 'px) rotateY(' + r + 'deg)';
-        it.style.zIndex = String(100 - a); it.style.opacity = a > 3 ? '0' : String(1 - a * .12);
-        it.style.filter = a ? 'brightness(' + (1 - a * .12) + ')' : 'none';
-        it.style.setProperty('--sombra-e', lado > 0 ? '.25' : '0'); it.style.setProperty('--sombra-d', lado < 0 ? '.25' : '0');
+        it.style.zIndex = String(100 - a); it.style.opacity = a > 3 ? '0' : String(1 - a * .1);
+        it.style.visibility = a > 4 ? 'hidden' : '';
+        const sb = Math.min(.45, .18 + a * .08);
+        it.style.setProperty('--sombra-e', lado > 0 ? String(sb) : '0'); it.style.setProperty('--sombra-d', lado < 0 ? String(sb) : '0');
         it.style.pointerEvents = a > 3 ? 'none' : '';
       });
       if (cfAtual === api) $('#cf-n').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(its.length).padStart(2, '0');
@@ -59,6 +67,7 @@
     $$('.aba').forEach((b) => b.classList.toggle('ativa', b.dataset.cat === cat));
     $$('.cf').forEach((cf) => { cf.hidden = cf.dataset.cat !== cat; });
     cfAtual = cfs[cat]; requestAnimationFrame(() => cfAtual.desenhar());
+    const cp = $("#capa-portefolio"), f = cfAtual.its[1] || cfAtual.its[0]; if (cp && f && !$('.pagina[data-pag="portefolio"]').hidden) { cp.style.backgroundImage = 'url(' + f.getAttribute('href') + ')'; delete cp.dataset.bg; }
   }
   $$('.aba').forEach((b) => b.addEventListener('click', () => { history.replaceState(null, '', '#portefolio/' + b.dataset.cat); mostrarTipo(b.dataset.cat); }));
   $$('.cf-seta').forEach((b) => b.addEventListener('click', () => cfAtual && cfAtual.mover(+b.dataset.dir)));

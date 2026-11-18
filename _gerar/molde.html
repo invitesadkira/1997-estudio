@@ -11,7 +11,7 @@
 <link rel="icon" href="icone.png" type="image/png"><link rel="apple-touch-icon" href="icone.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
-<link rel="stylesheet" href="estilo.css?v=7">
+<link rel="stylesheet" href="estilo.css?v=8">
 </head>
 <body class="no-inicio">
 <!-- O SITE É UMA SÓ PÁGINA COM «PÁGINAS» (.pagina[data-pag]): o menu mostra só a escolhida (#portefolio, #precos…), sem rolar.
@@ -32,9 +32,9 @@
       <!-- SLIDE DA CAPA: uma foto por tipo de evento (data-tipo = nome; href = portefólio desse tipo). -->
       <div class="capa-fundo" id="slides">
         <a class="slide ativo" href="#portefolio/casamentos" data-tipo="Casamentos" style="background-image:url(fotos/casamentos/cas-01-v1.webp)" aria-label="Casamentos"></a>
-        <a class="slide" href="#portefolio/pre-wedding" data-tipo="Pré-wedding" style="background-image:url(fotos/pre-wedding/pre-01-v1.webp)" aria-label="Pré-wedding"></a>
-        <a class="slide" href="#portefolio/noivados" data-tipo="Noivados" style="background-image:url(fotos/noivados/noiv-01-v1.webp)" aria-label="Noivados"></a>
-        <a class="slide" href="#portefolio/aniversarios" data-tipo="Aniversários" style="background-image:url(fotos/aniversarios/aniv-02-v1.webp)" aria-label="Aniversários"></a>
+        <a class="slide" href="#portefolio/pre-wedding" data-tipo="Pré-wedding" data-bg="fotos/pre-wedding/pre-01-v1.webp" aria-label="Pré-wedding"></a>
+        <a class="slide" href="#portefolio/noivados" data-tipo="Noivados" data-bg="fotos/noivados/noiv-01-v1.webp" aria-label="Noivados"></a>
+        <a class="slide" href="#portefolio/aniversarios" data-tipo="Aniversários" data-bg="fotos/aniversarios/aniv-02-v1.webp" aria-label="Aniversários"></a>
       </div>
       <div class="capa-txt">
         <p class="rotulo">Fotografia &amp; vídeo — Luanda</p>
@@ -50,8 +50,8 @@
 
   <!-- PORTEFÓLIO: um carrossel 3D por tipo de evento (separadores) -->
   <section class="pagina" data-pag="portefolio" hidden>
+    <div class="pag-capa" id="capa-portefolio" data-bg="fotos/casamentos/cas-03-v1.webp"><div class="pag-capa-txt"><p class="rotulo">Portefólio</p><h2>O nosso <em>trabalho</em></h2></div></div>
     <div class="sec">
-      <header class="sec-cab"><p class="rotulo">Portefólio</p><h2>O nosso <em>trabalho</em></h2></header>
       <div class="abas" role="tablist">
 {{ABAS}}
       </div>
@@ -62,8 +62,8 @@
 
   <!-- SERVIÇOS -->
   <section class="pagina" data-pag="servicos" hidden>
+    <div class="pag-capa" data-bg="fotos/pre-wedding/pre-02-v1.webp"><div class="pag-capa-txt"><p class="rotulo">Serviços</p><h2>O que <em>fazemos</em></h2></div></div>
     <div class="sec">
-      <header class="sec-cab"><p class="rotulo">Serviços</p><h2>O que <em>fazemos</em></h2></header>
       <ol class="lista">
         <li><a href="#portefolio/casamentos"><span class="n">01</span><b>Casamentos</b><span class="d">Do «sim» à festa: reportagem e filme do vosso dia.</span><i class="ir" aria-hidden="true">→</i></a></li>
         <li><a href="#portefolio/pre-wedding"><span class="n">02</span><b>Pré-wedding</b><span class="d">Uma sessão a dois antes do casamento — na praia, na cidade, ao pôr do sol.</span><i class="ir" aria-hidden="true">→</i></a></li>
@@ -79,8 +79,8 @@
 
   <!-- PREÇOS: pacotes de casamento (dados do dono, 18/11/2026) -->
   <section class="pagina" data-pag="precos" hidden>
+    <div class="pag-capa" data-bg="fotos/casamentos/cas-02-v1.webp"><div class="pag-capa-txt"><p class="rotulo">Pacotes de casamento</p><h2>Escolha o <em>vosso</em> pacote</h2></div></div>
     <div class="sec">
-      <header class="sec-cab"><p class="rotulo">Pacotes de casamento</p><h2>Escolha o <em>vosso</em> pacote</h2></header>
       <div class="pacotes">
 {{PACOTES}}
       </div>
@@ -88,20 +88,18 @@
   </section>
 
   <!-- PLATAFORMA 360º -->
-  <section class="pagina faixa" data-pag="plataforma" hidden>
-    <div class="faixa-in">
-      <p class="rotulo">Para alugar</p>
-      <h2>Plataforma <em>360º</em></h2>
+  <section class="pagina" data-pag="plataforma" hidden>
+    <div class="pag-capa" data-bg="fotos/aniversarios/aniv-03-v1.webp"><div class="pag-capa-txt"><p class="rotulo">Para alugar</p><h2>Plataforma <em>360º</em></h2></div></div>
+    <div class="faixa"><div class="faixa-in">
       <p>Os convidados sobem à plataforma e a câmara gira à volta deles: vídeos em câmara lenta, prontos a partilhar na hora. A atração que anima qualquer festa.</p>
       <a class="bt-wa claro" href="{{WA_360}}" target="_blank" rel="noopener">{{ICO_WA}}Reservar a plataforma</a>
-    </div>
+    </div></div>
   </section>
 
   <!-- CONTACTO -->
   <section class="pagina" data-pag="contacto" hidden>
+    <div class="pag-capa" data-bg="fotos/noivados/noiv-08-v1.webp"><div class="pag-capa-txt"><p class="rotulo">Contacto</p><h2>Vamos contar a <em>vossa</em> história?</h2></div></div>
     <div class="sec contacto">
-      <p class="rotulo">Contacto</p>
-      <h2>Vamos contar a <em>vossa</em> história?</h2>
       <p class="txt">Diga-nos a data e o tipo de evento — enviamos uma proposta.</p>
       <a class="bt-wa" href="{{ORC}}" target="_blank" rel="noopener">{{ICO_WA}}929 773 698</a>
       <div class="redes grandes">{{REDES}}</div>
@@ -114,6 +112,6 @@
   <span class="redes">{{REDES}}</span>
 </footer>
 <a class="wa-flutua" href="{{WA_OLA}}" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">{{ICO_WA}}</a>
-<script src="galeria.js?v=4" defer></script>
+<script src="galeria.js?v=5" defer></script>
 </body>
 </html>

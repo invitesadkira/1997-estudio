@@ -19,6 +19,13 @@
   mudar o molde/listas e correr `python _gerar/gerar-index.py`. Não editar o index.html à mão (perde-se na próxima geração).
 - PORTEFÓLIO em 3D (pedido do dono): separadores por tipo + carrossel coverflow (`.cf > .cf-palco > a.cf-it`, galeria.js):
   a foto do meio de frente, as outras rodadas para trás com reflexo; deslizar/setas; tocar na do meio = ver em grande.
+- FOTO DE CAPA EM TODAS AS PÁGINAS (pedido do dono, 18/11/2026: «as fotos de capa estavam boas»): `.pag-capa[data-bg]` com o
+  título por cima; só carrega quando a página abre; no Portefólio muda com o separador (2.ª foto do tipo). O topo fica
+  transparente (logótipo branco, `body.topo-claro`) enquanto a capa está por baixo.
+- LEVEZA (pedido do dono: «o site não pode ficar pesado por causa do 3D»): sem `filter` nas fotos do carrossel; reflexo e sombra
+  grande só no computador; fotos de cada separador com loading=lazy (só carregam ao abrir); slides 2..n da capa depois do load.
+- MENU DO TELEMÓVEL: com o menu aberto o topo perde o backdrop-filter (senão o menu fixo ficava preso à altura do topo e
+  transparente — erro visto no telemóvel do dono).
 - SLIDE DA CAPA: uma foto por tipo de evento (`#slides > a.slide`, data-tipo, href `#portefolio/<tipo>`), troca a cada 6 s.
 - Fotos: originais do dono em `G:\Para Site\<Tipo>\`; o Claude escolhe 9 por tipo (variadas, sobretudo ao alto) →
   `fotos/<tipo>/<pre>-NN-v1.webp` (1500 px) + `-p-vN.webp` (720 px, a do carrossel). Nome novo ao trocar (cache imutável).
