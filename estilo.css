@@ -1,0 +1,49 @@
+/* 1997 Estúdio — estilo do site (pasta estudio1997/, publicada à parte no Cloudflare Pages) */
+:root {
+  --fundo: #faf7f2; --tinta: #1d1a16; --suave: #6f665c; --ouro: #b08d57; --escuro: #0f0e0c; --linha: rgba(29, 26, 22, .12);
+  --f-tit: 'Cormorant Garamond', Georgia, serif; --f-txt: 'Jost', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--fundo); color: var(--tinta); font: 300 17px/1.65 var(--f-txt); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+
+.topo { position: fixed; inset: 0 0 auto; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: max(14px, env(safe-area-inset-top)) 20px 14px; color: #fff; background: linear-gradient(rgba(15, 14, 12, .65), rgba(15, 14, 12, 0)); }
+.marca { display: flex; align-items: baseline; gap: 8px; text-decoration: none; }
+.marca .ano { font: 600 26px/1 var(--f-tit); letter-spacing: .04em; }
+.marca .nome { font: 400 12px/1 var(--f-txt); letter-spacing: .32em; text-transform: uppercase; }
+.menu { display: flex; gap: 18px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+.menu a { text-decoration: none; opacity: .85; } .menu a:hover { opacity: 1; }
+@media (max-width: 640px) { .menu { display: none; } }
+
+.capa { position: relative; min-height: 100svh; display: flex; align-items: flex-end; color: #fff; overflow: hidden; }
+/* fundo provisório (até chegarem as fotos do dono): troca-se por uma foto em .capa-fundo { background-image } */
+.capa-fundo { position: absolute; inset: 0; background:
+  radial-gradient(120% 80% at 70% 20%, rgba(176, 141, 87, .35), transparent 60%),
+  radial-gradient(90% 70% at 10% 90%, rgba(120, 90, 60, .35), transparent 60%), var(--escuro); }
+.capa-fundo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 40%, rgba(15, 14, 12, .75)); }
+.capa-txt { position: relative; padding: 0 24px max(56px, env(safe-area-inset-bottom)); max-width: 720px; }
+.pre { margin: 0 0 10px; font: 500 12px/1 var(--f-txt); letter-spacing: .3em; text-transform: uppercase; color: var(--ouro); }
+h1 { margin: 0; font: 500 clamp(40px, 10vw, 76px)/1.02 var(--f-tit); }
+h1 em { font-weight: 400; color: #e8d6b5; }
+.sub { margin: 18px 0 28px; max-width: 520px; color: rgba(255, 255, 255, .82); }
+.bt { display: inline-block; padding: 14px 28px; border-radius: 99px; background: var(--ouro); color: #fff; text-decoration: none;
+  font: 500 13px/1 var(--f-txt); letter-spacing: .16em; text-transform: uppercase; transition: transform .2s, background .2s; }
+.bt:hover { background: #9a7a48; transform: translateY(-1px); }
+.bt-claro { background: #fff; color: var(--escuro); } .bt-claro:hover { background: #efe6d6; }
+
+.sec { padding: 88px 24px; max-width: 1080px; margin: 0 auto; text-align: center; }
+h2 { margin: 0 0 36px; font: 500 clamp(34px, 7vw, 52px)/1.1 var(--f-tit); }
+.txt { max-width: 600px; margin: 0 auto 28px; color: var(--suave); }
+.nota { font-size: 14px; color: var(--suave); font-style: italic; }
+.cartoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; text-align: left; }
+.cartao { padding: 26px 24px; border: 1px solid var(--linha); border-radius: 14px; background: #fff; }
+.cartao h3 { margin: 0 0 6px; font: 500 26px/1.15 var(--f-tit); }
+.cartao p { margin: 0; color: var(--suave); font-size: 15px; }
+
+.sec-escura { max-width: none; background: var(--escuro); color: #fff; }
+.sec-escura .txt { color: rgba(255, 255, 255, .75); }
+
+.rodape { padding: 36px 24px max(36px, env(safe-area-inset-bottom)); text-align: center; border-top: 1px solid var(--linha); font-size: 14px; color: var(--suave); }
+.rodape p { margin: 0; } .rodape b { color: var(--tinta); font-weight: 500; } .rodape span { color: var(--ouro); } .rodape .pq { margin-top: 4px; font-size: 12px; }
