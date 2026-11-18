@@ -23,6 +23,16 @@
   if (ss.length < 2) return;
   pts.innerHTML = ss.map(() => '<i></i>').join(''); const ps = [...pts.children]; let i = 0;
   const ver = (k) => { ss[i].classList.remove('ativo'); ps[i].classList.remove('ativo'); i = k; ss[i].classList.add('ativo'); ps[i].classList.add('ativo');
-    tipo.href = ss[i].getAttribute('href'); tipo.firstElementChild.textContent = ss[i].dataset.tipo; };
+    tipo.href = ss[i].getAttribute('href'); tipo.firstElementChild.textContent = String(i + 1).padStart(2, '0') + ' — ' + ss[i].dataset.tipo; };
   ver(0); setInterval(() => { if (!document.hidden) ver((i + 1) % ss.length); }, 6000);
+})();
+
+/* Topo branco depois da capa + aparecer suave das secções ao rolar */
+(() => {
+  const topo = document.getElementById('topo'), capa = document.getElementById('inicio');
+  const t = () => topo.classList.toggle('cheio', window.scrollY > capa.offsetHeight - 80); t(); addEventListener('scroll', t, { passive: true });
+  const els = document.querySelectorAll('.intro p, .sec-cab, .lista li, .gal-it, .faixa-in > *, .contacto > *, .pacote');
+  if (!('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visto'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  els.forEach((el, k) => { el.classList.add('ver-in'); if (el.classList.contains('gal-it')) el.style.transitionDelay = ((k % 3) * 80) + 'ms'; io.observe(el); });
 })();

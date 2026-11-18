@@ -17,6 +17,11 @@
 - SLIDE DA CAPA: uma foto por tipo de evento (`#slides > a.slide`, data-tipo = nome por baixo, href = galeria; troca a cada 6 s,
   em galeria.js). Cada tipo novo: juntar a galeria E um slide.
   Evitar fotos com personagens de filmes/marcas (ex.: bolo com figura da Disney).
+- VISUAL (18/11/2026, pedido do dono: moderno, bonito, clean, minimalista): fundo #fafaf8, tinta #111, linhas finas #e7e5e0,
+  letra Manrope (300/400/500) + itálico Instrument Serif só para destacar uma palavra; capa = slide em ecrã inteiro com o texto
+  em baixo; serviços em lista numerada; galerias em grelha 3x3 sem cantos; topo transparente que fica branco ao rolar.
+- PREÇOS (do dono, 18/11/2026): pacotes de CASAMENTO 1/2/3 = 150.000 / 225.000 / 325.000 Kz (o dono escreveu 225.0000 e
+  325.0000; corrigido). Nomes Pacote 1/2/3 como o dono, sem inventar nomes nem destaques.
 - Estado (18/11/2026): página provisória (capa, serviços, plataforma 360º, contacto) com `noindex`. Faltam as fotos, os
   vídeos e os contactos (WhatsApp/Instagram) que o dono vai dar. Tirar o `noindex` quando estiver pronto.
 - Mostrar ao dono e pedir o OK antes de cada push (como no InviteSão). Dados de exemplo sempre angolanos e inventados.
