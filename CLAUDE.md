@@ -22,7 +22,7 @@
 - SLIDE DA CAPA: uma foto por tipo de evento (`#slides > a.slide`, data-tipo, href `#portefolio/<tipo>`), troca a cada 6 s.
 - Fotos: originais do dono em `G:\Para Site\<Tipo>\`; o Claude escolhe 9 por tipo (variadas, sobretudo ao alto) →
   `fotos/<tipo>/<pre>-NN-v1.webp` (1500 px) + `-p-vN.webp` (720 px, a do carrossel). Nome novo ao trocar (cache imutável).
-  Evitar fotos com personagens de filmes/marcas. Tipos feitos (18/11/2026): Casamentos, Noivados, Aniversários.
+  Evitar fotos com personagens de filmes/marcas. Tipos feitos (18/11/2026): Casamentos, Pré-wedding, Noivados, Aniversários (`cats` em _gerar/gerar-index.py).
 - PREÇOS (do dono): pacotes de CASAMENTO 1/2/3 = 150.000 / 225.000 / 325.000 Kz (o dono escreveu «225.0000»/«325.0000»;
   corrigido). Nomes «Pacote 1/2/3», sem inventar nomes nem destaques. «Reservar» abre o WhatsApp com o pacote escrito.
 - VISUAL: moderno, clean, minimalista — fundo #fafaf8, tinta #111, linhas finas #e7e5e0, Manrope + itálico Instrument Serif
