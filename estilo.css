@@ -84,9 +84,9 @@ h2 { margin: 0; font: 300 clamp(36px, 5.6vw, 64px)/1.05 var(--sans); letter-spac
 .cf-palco { position: absolute; inset: 0; transform-style: preserve-3d; }
 .cf-it { position: absolute; left: 50%; top: 50%; width: min(56vw, 400px); aspect-ratio: 4 / 5; transform-style: preserve-3d;
   transition: transform .75s cubic-bezier(.2, .75, .2, 1), opacity .75s, filter .75s; will-change: transform; cursor: pointer;
-  border-radius: 4px; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .45); -webkit-box-reflect: below 10px linear-gradient(transparent 72%, rgba(255, 255, 255, .22)); }
-.cf-it img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; pointer-events: none; }
-.cf-it::after { content: ''; position: absolute; inset: 0; border-radius: 4px; background: linear-gradient(90deg, rgba(0, 0, 0, var(--sombra-e, 0)), transparent 45%, transparent 55%, rgba(0, 0, 0, var(--sombra-d, 0))); pointer-events: none; transition: background .75s; }
+  border-radius: 18px; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .45); -webkit-box-reflect: below 10px linear-gradient(transparent 72%, rgba(255, 255, 255, .22)); }
+.cf-it img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 18px; pointer-events: none; }
+.cf-it::after { content: ''; position: absolute; inset: 0; border-radius: 18px; background: linear-gradient(90deg, rgba(0, 0, 0, var(--sombra-e, 0)), transparent 45%, transparent 55%, rgba(0, 0, 0, var(--sombra-d, 0))); pointer-events: none; transition: background .75s; }
 .cf-ctrl { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 18px; }
 .cf-seta { width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--linha); border-radius: 50%; background: transparent; color: var(--tinta); cursor: pointer; transition: border-color .2s, background .2s; }
 .cf-seta:hover { border-color: var(--tinta); background: #fff; } .cf-seta svg { width: 20px; height: 20px; }
